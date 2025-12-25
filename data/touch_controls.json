@@ -1,0 +1,37 @@
+{
+  "Touch: left":
+  {
+    "type": ["touch", "move"],
+    "min_dist": 1,
+    "min_angle": -202.5,
+    "max_angle": -157.5
+  },
+  "Touch: right":
+  {
+    "type": ["touch", "move"],
+    "min_dist": 1,
+    "min_angle": -22.5,
+    "max_angle": 22.5
+  },
+  "Touch: up":
+  {
+    "type": ["touch", "move"],
+    "min_dist": 1,
+    "min_angle": -112.5,
+    "max_angle": -67.5
+  },
+  "Touch: down":
+  {
+    "type": ["touch", "move"],
+    "min_dist": 1,
+    "min_angle": 67.5,
+    "max_angle": 112.5
+  },
+  "Touch: tap":
+  {
+    "type": ["touch", "up"],
+    "max_dist": 0.1,
+    "is_double_tap": false,
+    "is_triple_tap": false
+  }
+}

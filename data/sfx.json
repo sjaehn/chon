@@ -1,0 +1,8 @@
+{
+  "move": "move.wav",
+  "flip": "woosh.wav",
+  "drop": "drop.wav",
+  "boom": "boom.wav",
+  "success": "success.wav",
+  "bonus": "bonus.wav"
+}

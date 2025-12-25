@@ -1,0 +1,283 @@
+[
+  {"name": "Water",
+    "value": 1,
+    "data": ["H-O-H"]
+  },
+  {"name": "Prussic acid",
+    "value": 1,
+    "data": ["H-C≡N"]
+  },
+  {"name": "Nitroxyl",
+    "value": 1,
+    "data": ["H-N=O"]
+  },
+  {"name": "Carbon dioxide",
+    "value": 1,
+    "data": ["O=C=O"]
+  },
+  {
+    "name": "Cyanic acid",
+    "value": 2,
+    "data": ["H-O-C≡N"]
+  },
+  {
+    "name": "Isocyanic acid",
+    "value": 2,
+    "data": ["H-N=C=O"]
+  },
+  {
+    "name": "Diimide",
+    "value": 2,
+    "data": ["H-N=N-H"]
+  },
+  {
+    "name": "Acetylene",
+    "value": 2,
+    "data": ["H-C≡C-H"]
+  },
+  {
+    "name": "Cyanogen",
+    "value": 2,
+    "data": ["N≡C-C≡N"]
+  },
+  {
+    "name": "Nitrous acid",
+    "value": 2,
+    "data": ["H-O-N=O"]
+  },
+  {
+    "name": "Hydroxy isocyanate",
+    "value": 3,
+    "data": ["H-O-N=C=O"]
+  },
+  {
+    "name": "Formaldehyde",
+    "value": 3,
+    "data":
+    [
+      "  O  ",
+      "  ‖  ",
+      "H-C-H"
+    ]
+  },
+  {
+    "name": "Ammonia",
+    "value": 3,
+    "data":
+    [
+      "  H  ",
+      "  |  ",
+      "H-N-H"
+    ]
+  },
+  {
+    "name": "Formic acid",
+    "value": 4,
+    "data":
+    [
+      "  O    ",
+      "  ‖    ",
+      "H-C-O-H"
+    ]
+  },
+  {
+    "name": "Methylene imine",
+    "value": 4,
+    "data":
+    [
+      "  N-H",
+      "  ‖  ",
+      "H-C-H"
+    ]
+  },
+  {
+    "name": "Hydroxylamine",
+    "value": 4,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-N-O-H"
+    ]
+  },
+  {
+    "name": "Ketene",
+    "value": 4,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-C=C=O"
+    ]
+  },
+  {
+    "name": "Methane",
+    "value": 5,
+    "data":
+    [
+      "  H  ",
+      "  |  ",
+      "H-C-H",
+      "  |  ",
+      "  H  "
+    ]
+  },
+  {
+    "name": "Methanol",
+    "value": 6,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-C-O-H",
+      "  |    ",
+      "  H    "
+    ]
+  },
+  {
+    "name": "Acetonitrile",
+    "value": 6,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-C-C≡N",
+      "  |    ",
+      "  H    "
+    ]
+  },
+  {
+    "name": "Hydrazine",
+    "value": 6,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-N-N-H",
+      "    |  ",
+      "    H  "
+    ]
+  },
+  {
+    "name": "Ethene",
+    "value": 6,
+    "data":
+    [
+      "    H  ",
+      "    |  ",
+      "H-C=C-H",
+      "  |    ",
+      "  H    "
+    ]
+  },
+  {
+    "name": "Formamide",
+    "value": 6,
+    "data":
+    [
+      "  O    ",
+      "  ‖    ",
+      "H-C-N-H",
+      "    |  ",
+      "    H  "
+    ]
+  },
+  {
+    "name": "Carbamic acid",
+    "value": 7,
+    "data":
+    [
+      "    O    ",
+      "    ‖    ",
+      "H-N-C-O-H",
+      "  |      ",
+      "  H      "
+    ]
+  },
+  {
+    "name": "Acrylonitrile",
+    "value": 7,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-C=C-H",
+      "    |  ",
+      "    C  ",
+      "    ⦀  ",
+      "    N  "
+    ]
+  },
+  {
+    "name": "Ethanal",
+    "value": 8,
+    "data":
+    [
+      "  H O  ",
+      "  | ‖  ",
+      "H-C-C-H",
+      "  |    ",
+      "  H    "
+    ]
+  },
+  {
+    "name": "Urea",
+    "value": 8,
+    "data":
+    [
+      "    O    ",
+      "    ‖    ",
+      "H-N-C-N-H",
+      "  |   |  ",
+      "  H   H  "
+    ]
+  },
+  {
+    "name": "Acetic acid",
+    "value": 9,
+    "data":
+    [
+      "  H O    ",
+      "  | ‖    ",
+      "H-C-C-O-H",
+      "  |      ",
+      "  H      "
+    ]
+  },
+  {
+    "name": "Hydroxycarbamide",
+    "value": 9,
+    "data":
+    [
+      "    O    ",
+      "    ‖    ",
+      "H-N-C-N-H",
+      "  |   |  ",
+      "H-O   H  "
+    ]
+  },
+  {
+    "name": "Ethanol",
+    "value": 10,
+    "data":
+    [
+      "  H H    ",
+      "  | |    ",
+      "H-C-C-O-H",
+      "  | |    ",
+      "  H H    "
+    ]
+  },
+  {
+    "name": "Propiolactone",
+    "value": 10,
+    "data":
+    [
+      "  O-C=O",
+      "  | |  ",
+      "H-C-C-H",
+      "  | |  ",
+      "  H H  "
+    ]
+  }
+]

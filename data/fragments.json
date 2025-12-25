@@ -1,0 +1,233 @@
+[
+  {
+    "name": "Hydrogen",
+    "value": 1,
+    "data": ["H"]
+  },
+  {
+    "name": "Carbon",
+    "value": 1,
+    "data": ["C"]
+  },
+  {
+    "name": "Nitrogen",
+    "value": 1,
+    "data": ["N"]
+  },
+  {
+    "name": "Oxygen",
+    "value": 1,
+    "data": ["O"]
+  },
+  {
+    "name": "Hydroxy",
+    "value": 2,
+    "data": ["O-H"]
+  },
+  {
+    "name": "Nitrile",
+    "value": 2,
+    "data": ["C≡N"]
+  },
+  {
+    "name": "Carbonyl",
+    "value": 2,
+    "data": ["C=O"]
+  },
+  {
+    "name": "Methine group",
+    "value": 2,
+    "data": ["C-H"]
+  },
+  {
+    "name": "Nitrene group",
+    "value": 2,
+    "data": ["N-H"]
+  },
+  {
+    "name": "Nitrosyl",
+    "value": 2,
+    "data": ["N=O"]
+  },
+  {
+    "name": "Peroxide",
+    "value": 3,
+    "data": ["O-O"]
+  },
+  {
+    "name": "Alkine",
+    "value": 3,
+    "data": ["C≡C"]
+  },
+  {
+    "name": "Nitrosamine",
+    "value": 3,
+    "data": ["N-N=O"]
+  },
+  {
+    "name": "Alkane",
+    "value": 4,
+    "data": ["C-C"]
+  },
+  {
+    "name": "Alkene",
+    "value": 4,
+    "data": ["C=C"]
+  },
+  {
+    "name": "Methylene(1)",
+    "value": 5,
+    "data": ["H-C-H"]
+  },
+  {
+    "name": "Methylene(2)",
+    "value": 6,
+    "data":
+    [
+      "H  ",
+      "|  ",
+      "C-H"]
+  },
+  {
+    "name": "Amino",
+    "value": 6,
+    "data":
+    [
+      "N-H",
+      "|  ",
+      "H  "
+    ]
+  },
+  {
+    "name": "Formyl",
+    "value": 6,
+    "data":
+    [
+      "O=C",
+      "  |",
+      "  H"
+    ]
+  },
+  {
+    "name": "Carbonic acid",
+    "value": 7,
+    "data":
+    [
+      "    O",
+      "    ‖",
+      "H-O-C"
+    ]
+  },
+  {
+    "name": "Methyl",
+    "value": 8,
+    "data":
+    [
+      "H-C-H",
+      "  |  ",
+      "  H  "
+    ]
+  },
+  {
+    "name": "c-Ethenediyl",
+    "value": 8,
+    "data":
+    [
+      "C=C",
+      "| |",
+      "H H"
+    ]
+  },
+  {
+    "name": "Ester",
+    "value": 9,
+    "data":
+    [
+      "  O",
+      "  ‖",
+      "O-C"
+    ]
+  },
+  {
+    "name": "Methylenedioxo(1)",
+    "value": 10,
+    "data":
+    [
+      "  O  ",
+      "  |  ",
+      "H-C-O",
+      "  |  ",
+      "  H  "
+    ]
+  },
+  {
+    "name": "Methylenedioxo(2)",
+    "value": 10,
+    "data":
+    [
+      "  H  ",
+      "  |  ",
+      "O-C-O",
+      "  |  ",
+      "  H  "
+    ]
+  },
+  {
+    "name": "Cyclobutyl",
+    "value": 11,
+    "data":
+    [
+      "C-C",
+      "| |",
+      "C-C"
+    ]
+  },
+  {
+    "name": "Acetyl",
+    "value": 11,
+    "data":
+    [
+      "  H    ",
+      "  |    ",
+      "H-C-C=O",
+      "  |    ",
+      "  H    "
+    ]
+  },
+  {
+    "name": "t-Ethenediyl",
+    "value": 12,
+    "data":
+    [
+      "H  ",
+      "|  ",
+      "C=C",
+      "  |",
+      "  H"
+    ]
+  },
+  {
+    "name": "Guanidyl",
+    "value": 13,
+    "data":
+    [
+      "H N  ",
+      "| ‖  ",
+      "N-C-N",
+      "    |",
+      "    H"
+    ]
+  },
+  {
+    "name": "Peptide",
+    "value": 14,
+    "data":
+    [
+      "  O  ",
+      "  ‖  ",
+      "H C  ",
+      "| |  ",
+      "N-C-H"
+    ]
+  }
+]

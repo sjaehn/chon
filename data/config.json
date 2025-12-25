@@ -1,0 +1,20 @@
+{
+  "controls":
+  {
+    "left": "Key: left",
+    "right": "Key: right",
+    "flip": "Key: up",
+    "rotate": "Key: down",
+    "drop": "Key: spacebar"
+  },
+
+  "audio":
+  {
+    "sfx": {"volume":  1.0},
+    "music":
+    {
+      "volume": 0.5,
+      "playlist": "Mendeleev's playlist"
+    }
+  }
+}

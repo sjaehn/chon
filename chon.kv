@@ -1,0 +1,781 @@
+#:kivy 2.2.1
+#:import join os.path.join
+
+
+<CContinueButton>:
+    markup: True
+    name: "Continue"
+    on_press: app.root.current = 'game_screen'
+
+
+<CButton>:
+    markup: True
+    text: "[size=" + str(int(0.3 * self.height)) + "]" + self.name + "[/size]"
+    background_color: 0, 0, 0, 0
+    #background_normal: ""
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [5]
+        Color:
+            rgba: 0.2, 0.2, 0.2, 1
+        Line:
+            width: 1
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 5)
+
+<CSpinnerOption@SpinnerOption>:
+    background_color: 0, 0, 0, 0
+    font_size: 0.5 * self.height
+    #background_normal: ""
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [5]
+        Color:
+            rgba: 0.2, 0.2, 0.2, 1
+        Line:
+            width: 1
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 5)
+
+<CSpinner>:
+    background_color: 0, 0, 0, 0
+    font_size: 0.5 * self.height
+    #background_normal: ""
+    option_cls: "CSpinnerOption"
+    sync_height: True
+    canvas.before:
+        Color:
+            rgba: (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [5]
+        Color:
+            rgba: 0.2, 0.2, 0.2, 1
+        Line:
+            width: 1
+            rounded_rectangle: (self.x, self.y, self.width, self.height, 5)
+        Triangle:
+            points: self.x + 0.92 * self.width, self.y + 0.6 * self.height, self.x + 0.97 * self.width, self.y + 0.6 * self.height, self.x + 0.945 * self.width, self.y + 0.4 * self.height
+
+
+<CMenuScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
+            source: join(app.INC_PATH, "bg_menu.jpg")
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10
+
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.x, 0.7 * self.top
+                size: self.width, 0.3 * self. height
+                texture: app.get_alpha_gradient()
+
+        Image:
+            size_hint: 1, 0.2
+            pos_hint: {'center_x': 0.5}
+            source: join(app.INC_PATH, 'logo.png')
+
+        RelativeLayout:
+            BoxLayout:
+                id: button_box
+                orientation: 'vertical'
+                pos_hint: {'top': 0.9}
+                size_hint: 0.5 if root.width > root.height else 0.8, 0.125 * len(self.children)
+                spacing: 10
+                padding: 0.05 * root.width, 0, 0.05 * root.width, 0
+
+                CButton:
+                    id: start_button
+                    name: "Start"
+                    on_press: root.reset_and_goto_game_screen()
+
+                CButton:
+                    name: "Settings"
+                    on_press: app.root.current = 'settings_screen'
+
+                CButton:
+                    name: "Rules"
+                    on_press: app.root.current = 'rules_screen'
+
+                CButton:
+                    name: "Highscore"
+                    on_press: app.root.current = 'scores_screen'
+
+                CButton:
+                    name: "Quit"
+                    on_press: app.stop()
+
+
+<CSettingsScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
+            source: join(app.INC_PATH, "bg_settings.jpg")
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 0.025 * self.width
+        spacing: 0.0125 * self.width
+
+        Label:
+            font_size: 0.5 * self.height
+            text: "Settings"
+            size_hint: 1.0, 0.2
+
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'center_x': 0.5}
+            size_hint: min(root.height / root.width, 1.0), 0.7
+
+            Label:
+                size_hint: 1, 0.1
+                font_size: 0.5 * self.height
+                outline_width: 2
+                text_size: self.size
+                halign: 'left'
+                valign: 'center'
+                text: "Controls:"
+
+            GridLayout:
+                size_hint: 1, 0.5
+                cols: 3
+                padding: 0.1 * root.width, 0, 0, 0.025 * root.height
+                spacing: 0.0125 * root.height
+
+                Label:
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Move left:"
+
+                Label:
+                    id: left_control_label
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: ""
+
+                CButton:
+                    id: set_left_button
+                    size_hint: 0.2, 0.2
+                    name: "Set"
+                    on_press: root.listen_to("left")
+
+                Label:
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Move right:"
+
+                Label:
+                    id: right_control_label
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: ""
+
+                CButton:
+                    id: set_right_button
+                    size_hint: 0.2, 0.2
+                    name: "Set"
+                    on_press: root.listen_to("right")
+
+                Label:
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Drop:"
+
+                Label:
+                    id: drop_control_label
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: ""
+
+                CButton:
+                    id: set_drop_button
+                    size_hint: 0.2, 0.2
+                    name: "Set"
+                    on_press: root.listen_to("drop")
+
+                Label:
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Flip:"
+
+                Label:
+                    id: flip_control_label
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: ""
+
+                CButton:
+                    id: set_flip_button
+                    size_hint: 0.2, 0.2
+                    name: "Set"
+                    on_press: root.listen_to("flip")
+
+                Label:
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Rotate:"
+
+                Label:
+                    id:rotate_control_label
+                    size_hint: 0.4, 0.2
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: ""
+
+                CButton:
+                    id: set_rotate_button
+                    size_hint: 0.2, 0.2
+                    name: "Set"
+                    on_press: root.listen_to("rotate")
+
+
+            Label:
+                size_hint: 1, 0.1
+                font_size: 0.5 * self.height
+                outline_width: 2
+                text_size: self.size
+                halign: 'left'
+                valign: 'center'
+                text: "Audio:"
+
+            GridLayout:
+                cols: 3
+                size_hint: 1, 0.3
+                padding: 0.1 * root.width, 0, 0, 0.025 * root.height
+                spacing: 0.0125 * root.height
+
+                Label:
+                    size_hint: 0.4, 0.333
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "SFX:"
+
+                Label:
+                    size_hint: 0.2, 0.333
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Vol:"
+
+                Slider:
+                    id: sfx_volume_slider
+                    size_hint: 0.4, 0.333
+                    orientation: 'horizontal'
+                    min: 0.0
+                    max: 1.0
+                    value: app.sfx_volume
+                    on_touch_up: app.sfx_volume = self.value
+                    on_touch_move: app.sfx_volume = self.value
+
+                Label:
+                    size_hint: 0.4, 0.333
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Music:"
+
+                Label:
+                    size_hint: 0.2, 0.333
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "Vol:"
+
+                Slider:
+                    id: music_volume_slider
+                    size_hint: 0.4, 0.333
+                    orientation: 'horizontal'
+                    min: 0.0
+                    max: 1.0
+                    value: app.music_volume
+                    on_touch_up: app.music_volume = self.value
+                    on_touch_move: app.music_volume = self.value
+
+                Widget:
+                    size_hint: 0.4, 0.333
+
+                Label:
+                    size_hint: 0.2, 0.333
+                    font_size: 0.5 * self.height
+                    outline_width: 2
+                    text_size: self.size
+                    halign: 'left'
+                    valign: 'center'
+                    text: "List:"
+
+                CSpinner:
+                    id: playlist_spinner
+                    size_hint: 0.4, 0.333
+                    text: app.music_playlist_name
+                    values: app.music_playlists
+                    on_text: app.music_playlist_name = self.text
+
+        StackLayout:
+            orientation: 'rl-bt'
+            size_hint: 1.0, 0.1
+            spacing: 2
+
+            CButton:
+                id: menu_button
+                size_hint: None, 1.0
+                width: self.height
+                name: "Menu"
+                on_press: app.root.current = 'menu_screen'
+
+
+<CText>:
+    markup: True
+
+
+<CRulesScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
+            source: join(app.INC_PATH, "bg_rules.jpg")
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+
+        Label:
+            font_size: 0.5 * self.height
+            text: "Rules"
+            size_hint: 1.0, 0.1
+
+        Image:
+            size_hint: 1.0, 0.8
+            mode: "desktop" if root.width > 1.333 * root.height else "pad" if root.height < 1.333 * root.width else "mobile"
+            source: join(app.INC_PATH, "rules_" + self.mode + ".png")
+
+        StackLayout:
+            orientation: 'rl-bt'
+            size_hint: 1.0, 0.1
+
+            CButton:
+                size_hint: None, 1.0
+                width: self.height
+                name: "Menu"
+                on_press: app.root.current = 'menu_screen'
+
+
+<CTube@RelativeLayout>:
+    canvas.before:
+        Color:
+            rgba: 0, 0, 0, 0.9
+        RoundedRectangle:
+            pos: 0, 0
+            size: self.width, 0.99 * self.height
+            radius: [5]
+        Color:
+            rgba: 1, 1, 1, 1
+        Line:
+            width: 1.0
+            rounded_rectangle: (0, 0, self.width, 0.99 * self.height, 5)
+
+<CHover>
+    size_hint: 0.2, 0.05
+    font_name: 'Segment14'
+    font_size: 0.75 * self.height
+    text_size: self.size
+
+<CGameScreen>:
+    nr_molecules: 0
+    score: 0
+    bg_filename: "bg01.jpg"
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
+            source: join(app.INC_PATH, self.bg_filename)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 10, 10, 10, 10
+        spacing: 10
+
+        GridLayout:
+            cols: 2 if root.width > root.height else 1
+            rows: 1 if root.width > root.height else 2
+            orientation: 'lr-tb' if root.width > root.height else "bt-lr"
+
+            RelativeLayout:
+                size_hint: 0.5 if root.width > root.height else 1, 1 if root.width > root.height else 0.8
+
+                CTube:
+                    id: tube
+                    size_hint: None, 1
+                    width: 0.485 * self.height
+                    pos_hint: {'right': 0.8}
+
+                    CReactor:
+                        id: reactor
+                        pos: 0, 0
+                        size_hint: None, None
+                        size: self.parent.width, 0.97 * self.parent.height
+                        on_touch_move: root.on_reactor_touch_move(*args)
+                        on_touch_down: root.on_reactor_touch_down(*args)
+                        on_touch_up: root.on_reactor_touch_up(*args)
+
+                    CMoleculeWidget:
+                        id: act
+                        col: 3
+                        row: 0
+                        cols: 0
+                        rows: 0
+                        pos: reactor.x + reactor.width * self.col / reactor.COLS, reactor.y + self.row * reactor.height / reactor.ROWS
+                        size_hint: None, None
+                        size: reactor.width * self.cols / reactor.COLS, reactor.height * self.rows / reactor.ROWS
+
+                    Label:
+                        id: game_over_label
+                        font_name: 'Segment14'
+                        size_hint: 1, 1
+                        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                        opacity: 0
+                        font_size: 0.15 * self.height
+                        text_size: self.size
+                        halign: 'center'
+                        valign: 'center'
+                        text: "Game over"
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, 0.8
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                    Label:
+                        id: fragment_label
+                        size_hint: 0.75, 0.03
+                        pos_hint: {'center_x': 0.5, 'top': 1}
+                        font_name: 'Segment14'
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'center'
+                        valign: 'center'
+                        text: ''
+                        canvas.before:
+                            Color:
+                                rgba: 0, 0, 0, 1
+                            RoundedRectangle:
+                                pos: self.pos
+                                size: self.size
+                                radius: [3]
+                            Color:
+                                rgba: 1, 1, 1, 1
+                            Line:
+                                width: 1.0
+                                rounded_rectangle: (self.x, self.y, self.width, self.height, 3)
+
+            RelativeLayout:
+                size_hint: 0.5 if root.width > root.height else 1, 1 if root.width > root.height else 0.2
+                pos_hint: {'x': 0}
+
+                StackLayout:
+                    orientation: "tb-rl"
+                    padding: 5, 5, 5, 5
+                    size_hint: None if root.width > root.height else 0.5, 0.2 if root.width > root.height else 1
+                    width: 3 * self.height if root.width > root.height else 2 * self.height
+                    pos_hint: {'x': 0, 'top': 1}
+
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.9
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Label:
+                        id: score_label
+                        font_name: 'Segment14'
+                        size_hint: 1.0, 0.4 if root.width > root.height else 0.2
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        text: "Score " + str(root.score)
+
+                    Label:
+                        id: level_label
+                        font_name: 'Segment14'
+                        size_hint: 1.0, 0.3 if root.width > root.height else 0.15
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        text: "Level      " + str(root.nr_molecules // 10 + 1)
+
+                    Label:
+                        id: molecules_label
+                        font_name: 'Segment14'
+                        size_hint: 1.0, 0.3 if root.width > root.height else 0.15
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        text: "Molecules  " + str(root.nr_molecules)
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None if root.width > root.height else 0.5, 0.4 if root.width > root.height else 1
+                    width: 1.5 * self.height if root.width > root.height else self.height
+                    pos_hint: {'x': 0, 'bottom': 0} if root.width > root.height else {'x': 0.5, 'bottom': 0}
+                    padding: 5, 5, 5, 5
+                    canvas.before:
+                        Color:
+                            rgba: 0, 0, 0, 0.9
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Label:
+                        font_name: 'Segment14'
+                        size_hint: 1.0, 0.15
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        text: "Bonus"
+
+                    Label:
+                        id: bonus_name
+                        font_name: 'Segment14'
+                        size_hint: 1.0, 0.1
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'left'
+                        valign: 'top'
+                        text: bonus.name
+
+                    AnchorLayout:
+                        id: bonus_frame
+                        size_hint: 1.0, 0.65
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+
+                        CMoleculeWidget:
+                            id: bonus
+                            size_hint: None, None
+                            size: bonus_frame.height * self.cols / 4, bonus_frame.height * self.rows / 4
+
+                    Label:
+                        id: bonus_label
+                        font_name: 'Segment14'
+                        size_hint: 0.9, 0.1
+                        font_size: 0.75 * self.height
+                        text_size: self.size
+                        halign: 'right'
+                        valign: 'top'
+                        text: "+ " + str(bonus.value) if bonus.value else ""
+
+        RelativeLayout:
+            size_hint: 1, 0.1
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, 1
+                width: tube.width
+                pos: tube.pos
+                spacing: 2
+
+                CButton:
+                    size_hint: 0.2, None
+                    height: self.width
+                    id: flip_button
+                    markup: True
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↔[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.flip_control[:13] + "[/size]"
+                    halign: 'center'
+                    on_press: root.flip_act()
+
+                CButton:
+                    size_hint: 0.2, None
+                    height: self.width
+                    id: left_button
+                    markup: True
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]←[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.left_control[:13] + "[/size]"
+                    halign: 'center'
+                    on_press: root.h_move_act(-1)
+
+                CButton:
+                    size_hint: 0.2, None
+                    height: self.width
+                    id: drop_button
+                    markup: True
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↓[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.drop_control[:13] + "[/size]"
+                    halign: 'center'
+                    on_press:
+                        root._drop_from = act.row
+                        act.set_job("drop")
+
+                CButton:
+                    size_hint: 0.2, None
+                    height: self.width
+                    id: right_button
+                    markup: True
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]→[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.right_control[:13] + "[/size]"
+                    halign: 'center'
+                    on_press: root.h_move_act(1)
+
+                CButton:
+                    size_hint: 0.2, None
+                    height: self.width
+                    id: rotate_button
+                    markup: True
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↻[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.rotate_control[:13] + "[/size]"
+                    halign: 'center'
+                    on_press: root.rotate_act()
+
+            CButton:
+                size_hint: None, None
+                width: rotate_button.width
+                height: rotate_button.height
+                pos_hint: {"right": 1, "bottom": 0}
+                name: "Menu"
+                on_press: app.root.current = 'menu_screen'
+
+<CScoreWidget>:
+    #font_size: 0.75 * self.height
+    text_size: self.width, 1.2 * self.font_size
+    halign: 'left'
+    font_name: 'Segment14'
+
+<CScoreInput>:
+    multiline: False
+    #font_size: 0.75 * self.height
+    font_name: 'Segment14'
+    foreground_color: 1, 0, 0, 1
+    background_color: 0, 0, 0, 0
+    border: 0, 0, 0, 0
+
+<CScoresScreen>:
+    canvas.before:
+        Rectangle:
+            pos: self.pos
+            size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
+            source: join(app.INC_PATH, "bg_scores.jpg")
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 10
+
+        Label:
+            font_size: 0.5 * self.height
+            text: "High scores"
+            size_hint: 1.0, 0.1
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'top'
+            size_hint: 1.0, 0.8
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0.8
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            GridLayout:
+                id: scores_table
+                cols: 6
+                size_hint: 1.0, len(self.children) / 6 * (1.0 / 15.0)
+
+
+
+        StackLayout:
+            orientation: 'rl-bt'
+            size_hint: 1.0, 0.1
+            spacing: 2
+
+            CButton:
+                size_hint: None, 1.0
+                width: self.height
+                name: "Quit"
+                on_press: app.stop()
+
+            CButton:
+                size_hint: None, 1.0
+                width: self.height
+                name: "Menu"
+                on_press: app.root.current = 'menu_screen'
+
+
+ScreenManager:
+    CMenuScreen:
+        name: 'menu_screen'
+
+    CSettingsScreen:
+        name: 'settings_screen'
+
+    CGameScreen:
+        name: 'game_screen'
+
+    CScoresScreen:
+        name: 'scores_screen'
+
+    CRulesScreen:
+        name: 'rules_screen'

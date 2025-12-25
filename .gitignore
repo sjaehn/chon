@@ -1,0 +1,6 @@
+/ori/**
+/build/**
+/dist/**
+/__pychache__/**
+/.venv/**
+/.idea/**
