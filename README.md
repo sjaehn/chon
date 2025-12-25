@@ -123,8 +123,19 @@ See LICENSE.
 
 ### Assets
 All sounds and images provided in this repository are either not eligible
-to copyright or granted to free use as 
+to copyright or granted to free use:
+* All sound effects (`inc/*.wav`) are synthesized by sjaehn and granted as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+* The tracks of "Mendeleev's playlist" (`inc/mu_01_*.ogg`) are 
+interpretations of classic russian folk songs (Kohanochka, Karapyet, 
+Troika; all before 1900) by sjaehn and granted as 
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+* All tracks of "Chemystery" by sjaehn and granted as 
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+* All game item images (`inc/*.png`) by sjaehn and granted as 
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+* All background images (`inc/*.jpg`) are AI generated and thus not 
+eligible to copyright.
 
 Fonts used in this game are free to use under the following conditions:
 * [Font OpenArrow by Heeyeun : MIT license](/inc/LICENSE.OpenArrow.md) from 
