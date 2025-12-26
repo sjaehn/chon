@@ -124,7 +124,10 @@ See LICENSE.
 ### Assets
 All sounds and images provided in this repository are either not eligible
 to copyright or granted to free use:
-* All sound effects (`inc/*.wav`) are synthesized by sjaehn and granted as 
+* Sound effect `boom.wav` from https://freesound.org/search/?q=825053 as 
+[CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
+* Other sound effects (`inc/*.wav`) are synthesized by sjaehn and 
+granted as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
 * The tracks of "Mendeleev's playlist" (`inc/mu_01_*.ogg`) are 
 interpretations of classic russian folk songs (Kohanochka, Karapyet, 

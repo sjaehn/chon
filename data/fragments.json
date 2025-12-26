@@ -35,7 +35,7 @@
     "data": ["C=O"]
   },
   {
-    "name": "Methine group",
+    "name": "Methylidyne",
     "value": 2,
     "data": ["C-H"]
   },
@@ -50,12 +50,17 @@
     "data": ["N=O"]
   },
   {
-    "name": "Peroxide",
+    "name": "Peroxy",
     "value": 3,
     "data": ["O-O"]
   },
   {
-    "name": "Alkine",
+    "name": "Hydroperoxy",
+    "value": 3,
+    "data": ["H-O-O"]
+  },
+  {
+    "name": "Alkyne",
     "value": 3,
     "data": ["C≡C"]
   },
@@ -63,6 +68,11 @@
     "name": "Nitrosamine",
     "value": 3,
     "data": ["N-N=O"]
+  },
+  {
+    "name": "Nitrosooxy",
+    "value": 3,
+    "data": ["O-N=O"]
   },
   {
     "name": "Alkane",
@@ -73,6 +83,11 @@
     "name": "Alkene",
     "value": 4,
     "data": ["C=C"]
+  },
+  {
+    "name": "Oxime(1)",
+    "value": 5,
+    "data": ["H-C=N-O-H"]
   },
   {
     "name": "Methylene(1)",
@@ -119,6 +134,16 @@
     ]
   },
   {
+    "name": "Oxime(2)",
+    "value": 7,
+    "data":
+    [
+      "      H",
+      "      |",
+      "H-O-N=C"
+    ]
+  },
+  {
     "name": "Methyl",
     "value": 8,
     "data":
@@ -136,6 +161,23 @@
       "C=C",
       "| |",
       "H H"
+    ]
+  },
+  {
+    "name": "Hydrazone",
+    "value": 8,
+    "data": ["H-N-N=C",
+             "  |    ",
+             "  H    "]
+  },
+  {
+    "name": "Hemiacetal",
+    "value": 9,
+    "data":
+    [
+      "    O",
+      "    |",
+      "H-O-C-H"
     ]
   },
   {
@@ -173,6 +215,16 @@
     ]
   },
   {
+    "name": "Acetal",
+    "value": 10,
+    "data":
+    [
+      "  O",
+      "  |",
+      "O-C-H"
+    ]
+  },
+  {
     "name": "Cyclobutyl",
     "value": 11,
     "data":
@@ -204,6 +256,16 @@
       "C=C",
       "  |",
       "  H"
+    ]
+  },
+  {
+    "name": "Anhydride",
+    "value": 13,
+    "data":
+    [
+      "  O   O  ",
+      "  ‖   ‖  ",
+      "O-C-O-C-O"
     ]
   },
   {
