@@ -6,7 +6,7 @@ of chemistry. However, knowledge of chemistry is NOT required.
 
 ## Get CHON
 ### From binaries
-Once provided: Download the provided binaries for your system. CHON can 
+Download the provided binaries for your system (if available). CHON can 
 directly be executed. No install required.
 
 ### From source
