@@ -85,14 +85,19 @@
     "data": ["C=C"]
   },
   {
-    "name": "Oxime(1)",
-    "value": 5,
-    "data": ["H-C=N-O-H"]
+    "name": "Methylene(1)",
+    "value": 4,
+    "data": ["H-C-H"]
   },
   {
-    "name": "Methylene(1)",
+    "name": "Oxime(1)",
     "value": 5,
-    "data": ["H-C-H"]
+    "data": ["C=N-O-H"]
+  },
+  {
+    "name": "Oxime(2)",
+    "value": 6,
+    "data": ["H-C=N-O-H"]
   },
   {
     "name": "Methylene(2)",
@@ -134,7 +139,7 @@
     ]
   },
   {
-    "name": "Oxime(2)",
+    "name": "Oxime(3)",
     "value": 7,
     "data":
     [
@@ -175,8 +180,8 @@
     "value": 9,
     "data":
     [
-      "    O",
-      "    |",
+      "    O  ",
+      "    |  ",
       "H-O-C-H"
     ]
   },
@@ -219,8 +224,8 @@
     "value": 10,
     "data":
     [
-      "  O",
-      "  |",
+      "  O  ",
+      "  |  ",
       "O-C-H"
     ]
   },
