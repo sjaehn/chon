@@ -2,7 +2,8 @@
 
 added_files = [('chon.kv', '.'),
                ('./inc', 'inc'),
-               ('./data', 'data')]
+               ('./data', 'data'),
+                ('./misc', 'misc')]
 
 a = Analysis(
     ['chon.py'],
@@ -37,5 +38,6 @@ exe = EXE(
     argv_emulation=False,
     target_arch=None,
     codesign_identity=None,
-    entitlements_file=None
+    entitlements_file=None,
+    icon='misc/icon.ico'
 )

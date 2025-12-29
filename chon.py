@@ -61,6 +61,7 @@ class CHONApp(App):
     DATA_PATH = join(APP_PATH, "data")
     INC_PATH = join(APP_PATH, "inc")
     DOC_PATH = join(APP_PATH, "doc")
+    MISC_PATH = join(APP_PATH, "misc")
 
     # Global game object data and images
     atoms = {}
@@ -344,6 +345,7 @@ class CHONApp(App):
             self.next_music()
 
     def build(self):
+        self.icon = join(self.MISC_PATH, "icon.ico")
         LabelBase.register(name='OpenArrow', fn_regular=join(self.INC_PATH, 'OpenArrow-Regular.ttf'))
         LabelBase.register(name='Segment14', fn_regular=join(self.INC_PATH, 'segment14.regular.otf'))
         self.load_atoms()
