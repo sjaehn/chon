@@ -25,6 +25,7 @@ from cbutton import CButton
 from ctext import CText
 from cspinner import CSpinner
 
+__version__ = "0.1"
 
 def load_playlists(filename, inc_path=""):
     """
