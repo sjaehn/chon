@@ -15,7 +15,7 @@
     #background_normal: ""
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+            rgba: (0.1, 0.1, 0.1, 0.9) if self.hover else (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
         RoundedRectangle:
             pos: self.pos
             size: self.size
