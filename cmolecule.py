@@ -45,8 +45,7 @@ class CMolecule:
                     atom = atoms[symbol]
                     self.set_atom((col, row), atom.copy())
                 elif symbol != ' ':
-                    raise ValueError
-
+                    raise ValueError("Invalid atom symbol '" + symbol + "' in " + self.name + " at position (" + str(col) + ", " + str(row) + ")")
 
         # Step 4: Build connections vertically
         for row in range(rows - 1):
