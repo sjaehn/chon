@@ -32,7 +32,7 @@ class CScoresScreen(Screen):
         source = scores_filename if isfile(scores_filename) else scores_stub_filename
 
         # Read data
-        with open(source, "r") as read_file:
+        with open(source, "r", encoding="utf8") as read_file:
             raw_data = load_json(read_file)
             self.scores_head = raw_data[0]
             scores_data = raw_data[1:]
@@ -105,7 +105,7 @@ class CScoresScreen(Screen):
         scores_data += self.scores_data_after
         scores_data = scores_data[: self.MAX_SCORES + 1]
 
-        with open(join(app.user_data_dir, "scores.json"), "w") as write_file:
+        with open(join(app.user_data_dir, "scores.json"), "w", encoding="utf8") as write_file:
             write_file.write(dumps(scores_data))
 
     @staticmethod

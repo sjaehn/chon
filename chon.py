@@ -40,7 +40,7 @@ def load_playlists(filename, inc_path=""):
     :return: Dict of the same structure with Sound objects instead of sound_filenames.
     """
     playlists = {}
-    with open(filename, "r") as read_file:
+    with open(filename, "r", encoding="utf8") as read_file:
         # Load json
         files = load_json(read_file)
 
@@ -99,7 +99,7 @@ class CHONApp(App):
         Loads atom data from <DATA_PATH>/atoms.json.
         """
         self.atoms.clear()
-        with open(join(self.DATA_PATH, "atoms.json"), "r") as read_file:
+        with open(join(self.DATA_PATH, "atoms.json"), "r", encoding="utf8") as read_file:
             atoms_data = load_json(read_file)
             for a in atoms_data:
                 atom = CAtom.from_dict(a)
@@ -110,7 +110,7 @@ class CHONApp(App):
         Loads molecule fragment data from <DATA_PATH>/fragments.json.
         """
         self.fragments.clear()
-        with open(join(self.DATA_PATH, "fragments.json"), "r") as read_file:
+        with open(join(self.DATA_PATH, "fragments.json"), "r", encoding="utf8") as read_file:
             fragments_data = load_json(read_file)
             for f in fragments_data:
                 self.fragments.append(f)
@@ -120,7 +120,7 @@ class CHONApp(App):
         Loads bonus molecule data from <DATA_PATH>/bonus.json.
         """
         self.bonus_molecules.clear()
-        with open(join(self.DATA_PATH, "bonus.json"), "r") as read_file:
+        with open(join(self.DATA_PATH, "bonus.json"), "r", encoding="utf8") as read_file:
             bonus_data = load_json(read_file)
             for f in bonus_data:
                 self.bonus_molecules.append(f)
@@ -139,7 +139,7 @@ class CHONApp(App):
         Reads <DATA_PATH>/sfx.json and loads the respective sound effects from <INC_PATH>.
         """
         self.sfx.clear()
-        with open(join(self.DATA_PATH, "sfx.json"), "r") as read_file:
+        with open(join(self.DATA_PATH, "sfx.json"), "r", encoding="utf8") as read_file:
             sfx_data = load_json(read_file)
             for key in sfx_data:
                 sound = SoundLoader.load(join(self.INC_PATH, sfx_data[key]))
@@ -158,7 +158,7 @@ class CHONApp(App):
         source = config_filename if isfile(config_filename) else config_stub_filename
 
         # Read data
-        with open(source, "r") as read_file:
+        with open(source, "r", encoding="utf8") as read_file:
             config = load_json(read_file)
             if "controls" in config:
                 if "left" in config["controls"]: self.left_control = config["controls"]["left"]
@@ -199,14 +199,14 @@ class CHONApp(App):
                                     }
                             }
                         }
-        with open(join(self.user_data_dir, "config.json"), "w") as write_file:
+        with open(join(self.user_data_dir, "config.json"), "w", encoding="utf8") as write_file:
             write_file.write(dumps(config_data))
 
     def create_controls(self):
 
         # Load touch controls and add double and triple tap
         self.controls = {}
-        with open(join(self.DATA_PATH, "touch_controls.json"), "r") as read_file:
+        with open(join(self.DATA_PATH, "touch_controls.json"), "r", encoding="utf8") as read_file:
             touch_data = load_json(read_file)
             for key, value in touch_data.items():
                 params1 = value.copy()
