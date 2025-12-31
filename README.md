@@ -1,7 +1,7 @@
 # CHON
 
-CHON is a Python-based logic puzzle computer game with elements 
-of chemistry. However, knowledge of chemistry is NOT required.
+CHON is a Python-based atomic puzzle game. Knowledge of chemistry is NOT required.
+
 ![Screenshot](doc/screenshot.jpg)
 
 ## Get CHON
@@ -74,8 +74,11 @@ other.
 
 ![Reaction of two incomplete molecules](doc/reaction.png)
 
-Complete molecules are converted into points and will be removed 
-from the reactor. 
+Move the falling molecule fragment horizontally to the right position. You
+can also rotate and/or horizontally flip the fragment. Then you can 
+optionally drop it and the molecule fragments in the reactor are combined,
+if possible. Complete molecules are converted into points and will be 
+removed from the reactor. 
 
 ### Atoms, electrons and bonds:
 There are 4 types of atoms in the game:
