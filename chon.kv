@@ -68,7 +68,7 @@
 <CMenuScreen>:
     canvas.before:
         Rectangle:
-            pos: self.pos
+            pos: 0, 0
             size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
             source: join(app.INC_PATH, "bg_menu.jpg")
 
@@ -123,7 +123,7 @@
 <CSettingsScreen>:
     canvas.before:
         Rectangle:
-            pos: self.pos
+            pos: 0, 0
             size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
             source: join(app.INC_PATH, "bg_settings.jpg")
 
@@ -393,7 +393,7 @@
 <CRulesScreen>:
     canvas.before:
         Rectangle:
-            pos: self.pos
+            pos: 0, 0
             size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
             source: join(app.INC_PATH, "bg_rules.jpg")
 
@@ -448,7 +448,7 @@
     bg_filename: "bg01.jpg"
     canvas.before:
         Rectangle:
-            pos: self.pos
+            pos: 0, 0
             size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
             source: join(app.INC_PATH, self.bg_filename)
 
@@ -538,8 +538,7 @@
                 StackLayout:
                     orientation: "tb-rl"
                     padding: 5, 5, 5, 5
-                    size_hint: None if root.width > root.height else 0.5, 0.2 if root.width > root.height else 1
-                    width: 3 * self.height if root.width > root.height else 2 * self.height
+                    size_hint: 0.75 if root.width > root.height else 0.5, 0.2 if root.width > root.height else 1
                     pos_hint: {'x': 0, 'top': 1}
 
                     canvas.before:
@@ -581,8 +580,7 @@
 
                 BoxLayout:
                     orientation: 'vertical'
-                    size_hint: None if root.width > root.height else 0.5, 0.4 if root.width > root.height else 1
-                    width: 1.5 * self.height if root.width > root.height else self.height
+                    size_hint: 0.75 if root.width > root.height else 0.5, 0.4 if root.width > root.height else 1
                     pos_hint: {'x': 0, 'bottom': 0} if root.width > root.height else {'x': 0.5, 'bottom': 0}
                     padding: 5, 5, 5, 5
                     canvas.before:
@@ -714,7 +712,7 @@
 <CScoresScreen>:
     canvas.before:
         Rectangle:
-            pos: self.pos
+            pos: 0, 0
             size: (self.height * 1920 / 1080, self.height) if self.height * 1920 / 1080 > self.width else (self.width, self.width * 1080 / 1920)
             source: join(app.INC_PATH, "bg_scores.jpg")
 
