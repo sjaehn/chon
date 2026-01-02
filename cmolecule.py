@@ -520,6 +520,10 @@ class CMolecule:
             atom1 = mol1.get_atom(pos1).copy()
             atom2 = mol2.get_atom(pos2).copy()
 
+            # Check equal atoms
+            if not atom1.equals(atom2):
+                return False
+
             # Prepare to continue with neighbors
             bond_directions1 = [i for i in range(4) if atom1.bonds["bound"][i]]
             bond_directions2 = [i for i in range(4) if atom2.bonds["bound"][i]]
