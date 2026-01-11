@@ -28,12 +28,12 @@ class CGameScreen(Screen):
     _bg_filenames = ["bg0" + str(i) + ".jpg" for i in range(2, 7)]
     _bonus_molecules = []
 
-    def reset(self, level=1, score=0):
+    def reset(self):
         """
         Reset all reactor data to restart/continue.
-        :param level: Level number, starting with 1.
-        :param score: Total score.
         """
+
+        app = App.get_running_app()
 
         if "reactor" in self.ids:
             self.ids.reactor.clear_widgets()
@@ -41,9 +41,9 @@ class CGameScreen(Screen):
             pass
 
         self.reset_act()
-        self.score = score
+        self.score = 0
         self._time = 0
-        self.nr_molecules = (level - 1) * 10
+        self.nr_molecules = app.test_nr_molecules
         self._drop_from = 0
 
         game_over_label = self.ids.game_over_label
@@ -134,16 +134,24 @@ class CGameScreen(Screen):
         Spawns a new molecule as act on top of the reactor.
         :return: True, if success. Otherwise, False.
         """
-        app = App.get_running_app()
 
+        app = App.get_running_app()
         reactor = self.ids.reactor
         act = self.ids.act
 
-        # Step 1: Find all fragments with value <= level + 1
-        candidates = [f for f in app.fragments if f["value"] <= self.nr_molecules // 10 + 2]
+        # Step 1: Test mode:
+        if app.test_fragment_names:
+            choice = next(fragment for fragment in app.fragments if fragment["name"] == app.test_fragment_names[0])
+            app.test_fragment_names = app.test_fragment_names[1:] + app.test_fragment_names[:1]
 
-        # Step 2: New molecule from random selection
-        choice = random.choice(candidates)
+        # Or step 1: Play mode
+        else:
+            # Step 1: Find all fragments with value <= level + 1
+            candidates = [f for f in app.fragments if f["value"] <= self.nr_molecules // 10 + 2]
+
+            # Step 2: New molecule from random selection
+            choice = random.choice(candidates)
+
         molecule = CMolecule(name=choice["name"])
         molecule.parse(atoms=app.atoms, txt=choice["data"])
 
@@ -428,20 +436,26 @@ class CGameScreen(Screen):
         app = App.get_running_app()
         bonus = self.ids.bonus
 
-        # Step 1: Check if bonus molecules with value <= level + 1 already in _bonus_molecules
-        # Random insert, but not on last pos
-        for bonus_molecule in app.bonus_molecules:
-            if (bonus_molecule not in self._bonus_molecules) and (bonus_molecule["value"] <= 2 + self.nr_molecules // 10):
-                if len(self._bonus_molecules) > 1:
-                    l = self._bonus_molecules[:-1]
-                    l.insert(random.randrange(start=0, stop=len(l)), bonus_molecule)
-                    self._bonus_molecules = l + [self._bonus_molecules[-1]]
-                else:
-                    self._bonus_molecules.insert(0, bonus_molecule)
+        # Step 1 in test mode:
+        if app.test_bonus_names:
+            choice = next(b for b in app.bonus_molecules if b["name"] == app.test_bonus_names[0])
+            app.test_bonus_names = app.test_bonus_names[1:] + app.test_bonus_names[:1]
 
-        # Step 2: Get the first bonus molecule and put it back to the end of the list
-        choice = self._bonus_molecules[0]
-        self._bonus_molecules = self._bonus_molecules[1:] + self._bonus_molecules[:1]
+        # Or step 1 in play mode: Check if bonus molecules with value <= level + 1 already in _bonus_molecules
+        # Random insert, but not on last pos
+        else:
+            for bonus_molecule in app.bonus_molecules:
+                if (bonus_molecule not in self._bonus_molecules) and (bonus_molecule["value"] <= 2 + self.nr_molecules // 10):
+                    if len(self._bonus_molecules) > 1:
+                        l = self._bonus_molecules[:-1]
+                        l.insert(random.randrange(start=0, stop=len(l)), bonus_molecule)
+                        self._bonus_molecules = l + [self._bonus_molecules[-1]]
+                    else:
+                        self._bonus_molecules.insert(0, bonus_molecule)
+
+            # Step 2: Get the first bonus molecule and put it back to the end of the list
+            choice = self._bonus_molecules[0]
+            self._bonus_molecules = self._bonus_molecules[1:] + self._bonus_molecules[:1]
 
         # Step 3: New block from random selection
         bonus.name = choice["name"]

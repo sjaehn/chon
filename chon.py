@@ -1,7 +1,10 @@
 #import kivy
+import getopt
+import sys
 from os import makedirs
 from os.path import join, dirname, isfile
 from json import load as load_json, dumps
+from json import loads as loads_json
 from kivy.app import App
 from kivy.core.audio import SoundLoader
 from kivy.core.image import Image as CoreImage
@@ -26,6 +29,15 @@ from ctext import CText
 from cspinner import CSpinner
 
 __version__ = "0.1"
+
+DEBUG_CONFIG_FILENAME: str | None = None
+"""
+Json filename for config file used for testing and debugging. If not None, the linked file may contain:
+nr_molecules: number of molecules at start (to set the level number),
+bonus_names: list of names of bonus molecules as in inc/bonus.json,
+fragment_names: list of names of fragments as in inc/fragments.json. 
+Only these data (and in the provided order) are used for testing.
+"""
 
 def load_playlists(filename, inc_path=""):
     """
@@ -93,6 +105,11 @@ class CHONApp(App):
 
     # Other config data
     controls = None
+
+    # Tests
+    test_bonus_names = []
+    test_fragment_names = []
+    test_nr_molecules = 0
 
     def load_atoms(self):
         """
@@ -345,6 +362,20 @@ class CHONApp(App):
         if self.music_volume:
             self.next_music()
 
+    def load_debug_config_data(self):
+        """
+        Loads test data for testing and debugging purposes.
+        """
+        if DEBUG_CONFIG_FILENAME:
+            try:
+                with open(DEBUG_CONFIG_FILENAME, "r", encoding="utf8") as read_file:
+                    debug_data = load_json(read_file)
+                    self.test_nr_molecules = debug_data["nr_molecules"] if "nr_molecules" in debug_data else 0
+                    self.test_bonus_names = debug_data["bonus_names"] if "bonus_names" in debug_data else []
+                    self.test_fragment_names = debug_data["fragment_names"] if "fragment_names" in debug_data else []
+            except FileNotFoundError:
+                pass
+
     def build(self):
         self.icon = join(self.MISC_PATH, "icon.ico")
         LabelBase.register(name='OpenArrow', fn_regular=join(self.INC_PATH, 'OpenArrow-Regular.ttf'))
@@ -359,6 +390,7 @@ class CHONApp(App):
         self.next_music()
         self.create_number_textures()
         self.create_alpha_gradient()
+        self.load_debug_config_data()
         self.bind(sfx_volume=self.apply_sfx_volume)
         self.bind(music_volume=self.apply_music_volume)
         self.bind(music_playlist_name=self.next_music)
