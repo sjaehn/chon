@@ -80,6 +80,10 @@ optionally drop it and the molecule fragments in the reactor are combined,
 if possible. Complete molecules are converted into points and will be 
 removed from the reactor. 
 
+### Controls
+You can play the game using your keyboard, mouse or touch device 
+(see Settings below).
+
 ### Atoms, electrons and bonds:
 There are 4 types of atoms in the game:
 * Hydrogen (H, <img src="doc/h.png" height="12"></img>): 1 electron
@@ -97,13 +101,26 @@ reached anymore.
 
 ### Scores:
 There are three ways to get points:
-* Drop atoms/fragments
-* Complete a molecule
-* Get bonus by completion a molecule which equals the bonus molecule
+* Drop atoms/fragments: 1 pt. for each line dropped
+* Complete a molecule: Sum of all values of connected fragments 
+  (multiples of 10)
+* Get bonus by completion a molecule which equals the bonus molecule: 
+  multiples of 100
 
 Good luck!
 
-# Implemented features
+## Settings
+### Controls
+You can re-define controls for horizontal movement, rotation, flip, 
+and drop. Press \<set\> followed by any input device action. Supported 
+input devices are keyboard, mouse and touch devices.
+
+### Audio
+Bugged by the default soundtrack? Choose another playlist.
+
+
+
+## Implemented features
 * [x] Gameplay
 * [x] Bonus incl. isomery detection algorithm
 * [x] Default keyboard controls
@@ -113,7 +130,6 @@ Good luck!
 * [x] High score table
 
 ## TODO
-
 * [ ] Implement joystick
 * [ ] Auto detect input devices
 * [ ] Add input device defaults to settings
