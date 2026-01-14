@@ -23,6 +23,24 @@ class CSettingsScreen(Screen):
             self.set_control_label(self._listen_to, "Key: " + key)
             self._listen_to = ""
 
+    def on_joy_hat(self, win, joy_id, hat_id, value):
+        app = App.get_running_app()
+        if (self._listen_to in self._controls.keys()) and (abs(value[0]) + abs(value[1]) > 0):
+            params = {"type": ["joy", "hat"], "joy_id": joy_id, "hat_id": hat_id, "dx": value[0], "dy": value[1]}
+            for name, control in app.controls.items():
+                if control.equals(**params):
+                    self._controls.update({self._listen_to: name})
+                    self.set_control_label(self._listen_to, name)
+                    self._listen_to = ""
+                    return True
+        return False
+
+    def on_joy_button_down(self, win, joy_id, button_id):
+        if (self._listen_to in self._controls.keys()) and (joy_id == 0) and (button_id < 16):
+            self._controls.update({self._listen_to: "Button: " + str(button_id)})
+            self.set_control_label(self._listen_to, "Button: " + str(button_id))
+            self._listen_to = ""
+
     def on_touch(self, t_type, touch):
         app = App.get_running_app()
 
@@ -53,7 +71,6 @@ class CSettingsScreen(Screen):
 
         return False
 
-
     def on_touch_move(self, touch):
         return self.on_touch("move", touch)
 
@@ -68,7 +85,7 @@ class CSettingsScreen(Screen):
         # Not listening yet
         if (self._listen_to == "") and (action in self._controls.keys()):
             self._listen_to = action
-            self.set_control_label(self._listen_to, "Press any key")
+            self.set_control_label(self._listen_to, "do something")
 
         # Otherwise: Do not listen anymore
         elif (self._listen_to == action) and (action in self._controls.keys()):
@@ -88,6 +105,8 @@ class CSettingsScreen(Screen):
             self.set_control_label(action, self._controls[action])
 
         Window.bind(on_key_down=self.on_keydown)
+        Window.bind(on_joy_hat=self.on_joy_hat)
+        Window.bind(on_joy_button_down=self.on_joy_button_down)
 
     def on_leave(self, *args):
         app = App.get_running_app()
@@ -100,3 +119,5 @@ class CSettingsScreen(Screen):
 
         app.save_user_config()
         Window.unbind(on_key_down=self.on_keydown)
+        Window.unbind(on_joy_hat=self.on_joy_hat)
+        Window.unbind(on_joy_button_down=self.on_joy_button_down)

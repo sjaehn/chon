@@ -4,7 +4,6 @@ import sys
 from os import makedirs
 from os.path import join, dirname, isfile
 from json import load as load_json, dumps
-from json import loads as loads_json
 from kivy.app import App
 from kivy.core.audio import SoundLoader
 from kivy.core.image import Image as CoreImage
@@ -235,6 +234,33 @@ class CHONApp(App):
                 params3 = value.copy()
                 params3.update({"is_triple_tap": True})
                 self.controls.update({"3"+key: CControl(**params3)})
+
+        # Create joystick controls (for support of up to 8 axes, 4 hats and 16 buttons)
+        # Only 1 joystick id (0) supported, yet!
+        for axis in range(8):
+            key1 = "Axis " + str(axis) + ": +"
+            params1 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "min_dist": 0.1}
+            self.controls.update({key1: CControl(**params1)})
+            key2 = "Axis " + str(axis) + ": -"
+            params2 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "max_dist": -0.1}
+            self.controls.update({key2: CControl(**params2)})
+        for hat in range(4):
+            key1 = "Hat " + str(hat) + ": left"
+            params1 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dx": -1}
+            self.controls.update({key1: CControl(**params1)})
+            key2 = "Hat " + str(hat) + ": right"
+            params2 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dx": 1}
+            self.controls.update({key2: CControl(**params2)})
+            key3 = "Hat " + str(hat) + ": up"
+            params3 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dy": 1}
+            self.controls.update({key3: CControl(**params3)})
+            key4 = "Hat " + str(hat) + ": down"
+            params4 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dy": -1}
+            self.controls.update({key4: CControl(**params4)})
+        for button in range(16):
+            key = "Button: " + str(button)
+            params = {"type": ["joy", "button", "down"], "joy_id": 0, "button_id": button}
+            self.controls.update({key: CControl(**params)})
 
         # Create keyboard controls: After init!!!
         pass

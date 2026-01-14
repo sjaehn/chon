@@ -577,6 +577,16 @@ class CGameScreen(Screen):
 
         return True
 
+    def on_joy_hat(self, win, joy_id, hat_id, value):
+        act = self.ids.act
+        if act.job == "play":
+            self.respond_to_controls(type=["joy", "hat"], joy_id=joy_id, hat_id=hat_id, dx=value[0], dy=value[1])
+
+    def on_joy_button_down(self, win, joy_id, button_id):
+        act = self.ids.act
+        if act.job == "play":
+            self.respond_to_controls(type=["joy", "button", "down"], joy_id=joy_id, button_id=button_id)
+
     def on_time(self, *args):
         """
         Timer event callback. This callback is regularly called every 0.025 s if this screen is active.
@@ -640,6 +650,8 @@ class CGameScreen(Screen):
         if not self._active:
             self.start_timer()
             self.bind_keys()
+            Window.bind(on_joy_hat=self.on_joy_hat)
+            Window.bind(on_joy_button_down=self.on_joy_button_down)
             self._active = True
 
         # Also add continue button to main menu
@@ -651,4 +663,6 @@ class CGameScreen(Screen):
         if self._active:
             self.stop_timer()
             self.unbind_keys()
+            Window.unbind(on_joy_hat=self.on_joy_hat)
+            Window.unbind(on_joy_button_down=self.on_joy_button_down)
             self._active = False

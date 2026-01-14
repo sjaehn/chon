@@ -81,8 +81,8 @@ if possible. Complete molecules are converted into points and will be
 removed from the reactor. 
 
 ### Controls
-You can play the game using your keyboard, mouse or touch device 
-(see Settings below).
+You can play the game using your keyboard, joystick, gamepad, mouse or 
+touch device (see Settings below).
 
 ### Atoms, electrons and bonds:
 There are 4 types of atoms in the game:
@@ -125,12 +125,13 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] Bonus incl. isomery detection algorithm
 * [x] Default keyboard controls
 * [x] Optional mouse/touch controls
+* [x] Optional joystick/gamepad support (hat and buttons only, yet)
 * [x] Custom user configs
 * [x] SFX, music playback
 * [x] High score table
 
 ## TODO
-* [ ] Implement joystick
+* [ ] Fully implement joystick
 * [ ] Auto detect input devices
 * [ ] Add input device defaults to settings
 * [ ] Prepare mobile version
