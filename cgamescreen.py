@@ -589,7 +589,6 @@ class CGameScreen(Screen):
         """
         rel_val = value / 0x8000    # 16 bit int to float
         axis = dict_get_or_create(self._joystick_axes, joy_id, axis_id)
-        print(self._joystick_axes)
         if abs(rel_val) > 0.2:  # TODO replace 0.2 by const
             axis.update({"dx": rel_val})
         else:
@@ -627,7 +626,8 @@ class CGameScreen(Screen):
             for axis_id, axis in joystick.items():
                 if ("dx" in axis) and (abs(axis["dx"]) >= 0.2): # TODO replace 0.2 by const
                     value = axis["value"] if "value" in axis else 0.0
-                    value += 0.5 * axis["dx"]   # TODO Replace 0.5 by const
+                    value *= 0.707
+                    value += axis["dx"]
                     if abs(value) >= 1.0:
                         self.respond_to_controls(type=["joy", "axis"], joy_id=joy_id, axis_id=axis_id, dx=value)
                         value -= value / abs(value)
