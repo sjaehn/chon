@@ -30,7 +30,10 @@ class CSettingsScreen(Screen):
 
     def on_joy_hat(self, win, joy_id, hat_id, value):
         app = App.get_running_app()
-        if (self._listen_to in self._controls.keys()) and (abs(value[0]) + abs(value[1]) > 0):
+        if (self._listen_to in self._controls.keys()) and \
+                (abs(value[0]) + abs(value[1]) > 0) and \
+                (joy_id < app.MAX_JOYSTICKS) and \
+                (hat_id < app.MAX_JOYSTICK_HATS):
             params = {"type": ["joy", "hat"], "joy_id": joy_id, "hat_id": hat_id, "dx": value[0], "dy": value[1]}
             for name, control in app.controls.items():
                 if control.equals(**params):
@@ -41,7 +44,10 @@ class CSettingsScreen(Screen):
         return False
 
     def on_joy_button_down(self, win, joy_id, button_id):
-        if (self._listen_to in self._controls.keys()) and (joy_id == 0) and (button_id < 16):
+        app = App.get_running_app()
+        if (self._listen_to in self._controls.keys()) and \
+                (joy_id < app.MAX_JOYSTICKS) and \
+                (button_id < app.MAX_JOYSTICK_BUTTONS):
             self._controls.update({self._listen_to: "Button: " + str(button_id)})
             self.set_control_label(self._listen_to, "Button: " + str(button_id))
             self._listen_to = ""

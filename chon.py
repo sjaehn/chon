@@ -75,6 +75,12 @@ class CHONApp(App):
     DOC_PATH = join(APP_PATH, "doc")
     MISC_PATH = join(APP_PATH, "misc")
 
+    # Input devices
+    MAX_JOYSTICKS = 1
+    MAX_JOYSTICK_AXES = 8
+    MAX_JOYSTICK_HATS = 4
+    MAX_JOYSTICK_BUTTONS = 16
+
     # Global game object data and images
     atoms = {}
     fragments = []
@@ -237,14 +243,14 @@ class CHONApp(App):
 
         # Create joystick controls (for support of up to 8 axes, 4 hats and 16 buttons)
         # Only 1 joystick id (0) supported, yet!
-        for axis in range(8):
+        for axis in range(self.MAX_JOYSTICK_AXES):
             key1 = "Axis " + str(axis) + ": +"
             params1 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "min_dist": 0.1}
             self.controls.update({key1: CControl(**params1)})
             key2 = "Axis " + str(axis) + ": -"
             params2 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "max_dist": -0.1}
             self.controls.update({key2: CControl(**params2)})
-        for hat in range(4):
+        for hat in range(self.MAX_JOYSTICK_HATS):
             key1 = "Hat " + str(hat) + ": left"
             params1 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dx": -1}
             self.controls.update({key1: CControl(**params1)})
@@ -257,7 +263,7 @@ class CHONApp(App):
             key4 = "Hat " + str(hat) + ": down"
             params4 = {"type": ["joy", "hat"], "joy_id": 0, "hat_id": hat, "dy": -1}
             self.controls.update({key4: CControl(**params4)})
-        for button in range(16):
+        for button in range(self.MAX_JOYSTICK_BUTTONS):
             key = "Button: " + str(button)
             params = {"type": ["joy", "button", "down"], "joy_id": 0, "button_id": button}
             self.controls.update({key: CControl(**params)})
