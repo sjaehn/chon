@@ -113,7 +113,7 @@ Good luck!
 ### Controls
 You can re-define controls for horizontal movement, rotation, flip, 
 and drop. Press \<set\> followed by any input device action. Supported 
-input devices are keyboard, mouse and touch devices.
+input devices are keyboard, joysticks, gamepads, mouse and touch devices.
 
 ### Audio
 Bugged by the default soundtrack? Choose another playlist.
