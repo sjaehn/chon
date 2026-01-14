@@ -1,6 +1,4 @@
 #import kivy
-import getopt
-import sys
 from os import makedirs
 from os.path import join, dirname, isfile
 from json import load as load_json, dumps
