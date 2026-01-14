@@ -19,9 +19,14 @@ class CSettingsScreen(Screen):
     def on_keydown(self, obj, keycode, scancode, text, modifiers):
         if self._listen_to in self._controls.keys():
             key = Keyboard.keycode_to_string(obj, keycode)
-            self._controls.update({self._listen_to: "Key: " + key})
-            self.set_control_label(self._listen_to, "Key: " + key)
+            if key != "escape":
+                self._controls.update({self._listen_to: "Key: " + key})
+                self.set_control_label(self._listen_to, "Key: " + key)
+            else:
+                self.set_control_label(self._listen_to, self._controls[self._listen_to])
             self._listen_to = ""
+            return True
+        return False
 
     def on_joy_hat(self, win, joy_id, hat_id, value):
         app = App.get_running_app()
