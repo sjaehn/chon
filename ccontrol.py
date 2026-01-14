@@ -3,13 +3,14 @@ import math
 
 class CControl:
     """
-    Class to describe a touch action.
+    Generic class for all controls.
     """
     def __init__(self, **kwargs):
         """
-        Initializes a touch object.
-        :param kwargs: Keyword arguments passed to the touch object.
-        Possible arguments: type, min_dist, max_dist, min_angle, max_angle, is_double_tap, is_triple_tap, ...
+        Initializes a control object.
+        :param kwargs: Keyword arguments passed to the control object.
+        Possible arguments depending on the device: type, min_dist, max_dist, min_angle, max_angle, is_double_tap,
+        is_triple_tap, ...
         """
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -17,16 +18,16 @@ class CControl:
     def equals(self, **kwargs):
         """
         Compares if provided parameters matches with this object.
-        :param kwargs: Keyword arguments passed to the touch object.
-        Possible arguments: type, dx, dy, is_double_tap, is_triple_tap, ...
+        :param kwargs: Keyword arguments passed to the control object.
+        Possible arguments depending on the device: type, dx, dy, is_double_tap, is_triple_tap, ...
 
         :return: True, if matches, False otherwise.
         """
 
-        # Calculate and analyze dist, angle
+        # Calculate and analyze dist, angle for 2d input devices (touch, TODO joystick)
         dx = kwargs["dx"] if "dx" in kwargs else 0
         dy = kwargs["dy"] if "dy" in kwargs else 0
-        if dx or dy:
+        if (dx or dy) and (not hasattr(self, "dx")) and (not hasattr(self, "dy")):
             dist = math.sqrt(dx**2 + dy**2)
             angle = 180 * math.atan2(-dy, dx) / math.pi if dist != 0 else 0
             min_dist = getattr(self, "min_dist") if hasattr(self, "min_dist") else 0
