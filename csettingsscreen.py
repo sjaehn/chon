@@ -28,6 +28,22 @@ class CSettingsScreen(Screen):
             return True
         return False
 
+    def on_joy_axis(self, win, joy_id, axis_id, value):
+        app = App.get_running_app()
+        rel_val = value / 0x8000    # 16 bit int to float -1..1
+        if (self._listen_to in self._controls.keys()) and \
+                (abs(rel_val) > 0.5) and \
+                (joy_id < app.MAX_JOYSTICKS) and \
+                (axis_id < app.MAX_JOYSTICK_AXES):
+            params = {"type": ["joy", "axis"], "joy_id": joy_id, "axis_id": axis_id, "dx": rel_val}
+            for name, control in app.controls.items():
+                if control.equals(**params):
+                    self._controls.update({self._listen_to: name})
+                    self.set_control_label(self._listen_to, name)
+                    self._listen_to = ""
+                    return True
+        return False
+
     def on_joy_hat(self, win, joy_id, hat_id, value):
         app = App.get_running_app()
         if (self._listen_to in self._controls.keys()) and \
@@ -116,6 +132,7 @@ class CSettingsScreen(Screen):
             self.set_control_label(action, self._controls[action])
 
         Window.bind(on_key_down=self.on_keydown)
+        Window.bind(on_joy_axis=self.on_joy_axis)
         Window.bind(on_joy_hat=self.on_joy_hat)
         Window.bind(on_joy_button_down=self.on_joy_button_down)
 
@@ -130,5 +147,6 @@ class CSettingsScreen(Screen):
 
         app.save_user_config()
         Window.unbind(on_key_down=self.on_keydown)
+        Window.unbind(on_joy_axis=self.on_joy_axis)
         Window.unbind(on_joy_hat=self.on_joy_hat)
         Window.unbind(on_joy_button_down=self.on_joy_button_down)

@@ -245,10 +245,12 @@ class CHONApp(App):
         # Only 1 joystick id (0) supported, yet!
         for axis in range(self.MAX_JOYSTICK_AXES):
             key1 = "Axis " + str(axis) + ": +"
-            params1 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "min_dist": 0.1}
+            params1 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "min_dist": 0.1,
+                       "min_angle": 0, "max_angle": 0}
             self.controls.update({key1: CControl(**params1)})
             key2 = "Axis " + str(axis) + ": -"
-            params2 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "max_dist": -0.1}
+            params2 = {"type": ["joy", "axis"], "joy_id": 0, "axis_id": axis, "min_dist": 0.1,
+                       "min_angle": -180, "max_angle": -180}
             self.controls.update({key2: CControl(**params2)})
         for hat in range(self.MAX_JOYSTICK_HATS):
             key1 = "Hat " + str(hat) + ": left"

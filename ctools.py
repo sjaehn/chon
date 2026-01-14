@@ -11,3 +11,10 @@ def char_to_bond(char):
             return item[0]
 
     return 0
+
+def dict_get_or_create(dict, *args):
+    if args and (not args[0] in dict):
+        dict.update({args[0]: {}})
+    if len(args) > 1:
+        return dict_get_or_create(dict[args[0]], *args[1:])
+    return dict[args[0]]

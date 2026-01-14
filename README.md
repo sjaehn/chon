@@ -125,13 +125,12 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] Bonus incl. isomery detection algorithm
 * [x] Default keyboard controls
 * [x] Optional mouse/touch controls
-* [x] Optional joystick/gamepad support (hat and buttons only, yet)
+* [x] Optional joystick/gamepad support
 * [x] Custom user configs
 * [x] SFX, music playback
 * [x] High score table
 
 ## TODO
-* [ ] Fully implement joystick
 * [ ] Auto detect input devices
 * [ ] Add input device defaults to settings
 * [ ] Prepare mobile version

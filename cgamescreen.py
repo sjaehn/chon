@@ -11,7 +11,7 @@ from chover import CHover
 from cmolecule import CMolecule
 from cmoleculewidget import CMoleculeWidget
 from creactor import CReactor
-from ctools import fib
+from ctools import fib, dict_get_or_create
 
 
 class CGameScreen(Screen):
@@ -27,6 +27,7 @@ class CGameScreen(Screen):
     _time = 0
     _bg_filenames = ["bg0" + str(i) + ".jpg" for i in range(2, 7)]
     _bonus_molecules = []
+    _joystick_axes = {}
 
     def reset(self):
         """
@@ -554,11 +555,11 @@ class CGameScreen(Screen):
     def on_keydown(self, obj, keycode, scancode, text, modifiers):
         """
         Key press event callback.
-        :param obj:
-        :param keycode:
-        :param scancode:
-        :param text:
-        :param modifiers:
+        :param obj: Object.
+        :param keycode: Keycode.
+        :param scancode: Unused.
+        :param text: Unused.
+        :param modifiers: Unused.
         :return: Always return True to prevent App.stop() on <ESC>.
         """
 
@@ -576,6 +577,23 @@ class CGameScreen(Screen):
             self.respond_to_controls(type=["key", "down"], keycode=key)
 
         return True
+
+    def on_joy_axis(self, win, joy_id, axis_id, value):
+        """
+        Callback for value change of joystick axis devices. This callback only sets the dx value. Needs to be repeatedly
+        handled in on_time.
+        :param win: Unused.
+        :param joy_id: ID of joystick or gamepad.
+        :param axis_id: ID joystick or gamepad axis.
+        :param value: 16 bit int value.
+        """
+        rel_val = value / 0x8000    # 16 bit int to float
+        axis = dict_get_or_create(self._joystick_axes, joy_id, axis_id)
+        print(self._joystick_axes)
+        if abs(rel_val) > 0.2:  # TODO replace 0.2 by const
+            axis.update({"dx": rel_val})
+        else:
+            axis.update({"dx": 0.0, "value": 0.0})
 
     def on_joy_hat(self, win, joy_id, hat_id, value):
         act = self.ids.act
@@ -603,6 +621,17 @@ class CGameScreen(Screen):
         tube: RelativeLayout = self.ids.tube
 
         self._time += 1
+
+        # Handle joystick axis devices
+        for joy_id, joystick in self._joystick_axes.items():
+            for axis_id, axis in joystick.items():
+                if ("dx" in axis) and (abs(axis["dx"]) >= 0.2): # TODO replace 0.2 by const
+                    value = axis["value"] if "value" in axis else 0.0
+                    value += 0.5 * axis["dx"]   # TODO Replace 0.5 by const
+                    if abs(value) >= 1.0:
+                        self.respond_to_controls(type=["joy", "axis"], joy_id=joy_id, axis_id=axis_id, dx=value)
+                        value -= value / abs(value)
+                    axis.update({"value": value})
 
         # Rotate free bonds every n cycles
         if self._time % 40 == 0:
@@ -650,6 +679,7 @@ class CGameScreen(Screen):
         if not self._active:
             self.start_timer()
             self.bind_keys()
+            Window.bind(on_joy_axis=self.on_joy_axis)
             Window.bind(on_joy_hat=self.on_joy_hat)
             Window.bind(on_joy_button_down=self.on_joy_button_down)
             self._active = True
@@ -663,6 +693,7 @@ class CGameScreen(Screen):
         if self._active:
             self.stop_timer()
             self.unbind_keys()
+            Window.unbind(on_joy_axis=self.on_joy_axis)
             Window.unbind(on_joy_hat=self.on_joy_hat)
             Window.unbind(on_joy_button_down=self.on_joy_button_down)
             self._active = False
