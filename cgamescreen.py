@@ -23,7 +23,6 @@ class CGameScreen(Screen):
     MENU_KEY = "escape"
 
     _timer = None
-    _active = False
     _time = 0
     _bg_filenames = ["bg0" + str(i) + ".jpg" for i in range(2, 7)]
     _bonus_molecules = []
@@ -104,12 +103,6 @@ class CGameScreen(Screen):
             self.start_timer()
         else:
             self.stop_timer()
-
-    def bind_keys(self):
-        Window.bind(on_key_down=self.on_keydown)
-
-    def unbind_keys(self):
-        Window.unbind(on_key_down=self.on_keydown)
 
     def reset_act(self):
         """
@@ -676,13 +669,11 @@ class CGameScreen(Screen):
         self.manager.current = "scores_screen"
 
     def on_enter(self, *args):
-        if not self._active:
-            self.start_timer()
-            self.bind_keys()
-            Window.bind(on_joy_axis=self.on_joy_axis)
-            Window.bind(on_joy_hat=self.on_joy_hat)
-            Window.bind(on_joy_button_down=self.on_joy_button_down)
-            self._active = True
+        self.start_timer()
+        Window.bind(on_key_down=self.on_keydown)
+        Window.bind(on_joy_axis=self.on_joy_axis)
+        Window.bind(on_joy_hat=self.on_joy_hat)
+        Window.bind(on_joy_button_down=self.on_joy_button_down)
 
         # Also add continue button to main menu
         screen_manager: ScreenManager = App.get_running_app().root
@@ -690,10 +681,8 @@ class CGameScreen(Screen):
         menu_screen.add_continue_button()
 
     def on_leave(self, *args):
-        if self._active:
-            self.stop_timer()
-            self.unbind_keys()
-            Window.unbind(on_joy_axis=self.on_joy_axis)
-            Window.unbind(on_joy_hat=self.on_joy_hat)
-            Window.unbind(on_joy_button_down=self.on_joy_button_down)
-            self._active = False
+        self.stop_timer()
+        Window.unbind(on_key_down=self.on_keydown)
+        Window.unbind(on_joy_axis=self.on_joy_axis)
+        Window.unbind(on_joy_hat=self.on_joy_hat)
+        Window.unbind(on_joy_button_down=self.on_joy_button_down)
