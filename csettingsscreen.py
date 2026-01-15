@@ -1,9 +1,15 @@
+import sys
+from os.path import join
+
 from kivy.app import App
 from kivy.core.window import Window, Keyboard
 from kivy.uix.screenmanager import Screen
+from json import load as load_json
 
 
 class CSettingsScreen(Screen):
+    CONTROL_DEFAULTS_FILENAME = "control_defaults.json"
+
     _controls = {}
     _listen_to = ""
 
@@ -15,6 +21,26 @@ class CSettingsScreen(Screen):
         """
         if action in self._controls.keys():
             self.ids[action + "_control_label"].text = control
+
+    def set_control_defaults(self, name):
+        """
+        Loads and applies default control settings.
+        :param name: Control type name ("keys" or "touch" or "gamepad")
+        """
+        app = App.get_running_app()
+        try:
+            with open(join(app.DATA_PATH, self.CONTROL_DEFAULTS_FILENAME), "r", encoding="utf8") as read_file:
+                default_data = load_json(read_file)
+        except FileNotFoundError:
+            print("Error: control defaults file not found.", file=sys.stderr)
+            return
+
+        if name in default_data.keys():
+            default = default_data[name]
+            for key in self._controls.keys():
+                if key in default:
+                    self._controls.update({key:default[key]})
+                    self.set_control_label(key, default[key])
 
     def on_keydown(self, obj, keycode, scancode, text, modifiers):
         if self._listen_to in self._controls.keys():

@@ -143,7 +143,7 @@
             size_hint: min(root.height / root.width, 1.0), 0.7
 
             Label:
-                size_hint: 1, 0.1
+                size_hint: 1, 1/12
                 font_size: 0.5 * self.height
                 outline_width: 2
                 text_size: self.size
@@ -152,9 +152,9 @@
                 text: "Controls:"
 
             GridLayout:
-                size_hint: 1, 0.5
+                size_hint: 1, 5/12
                 cols: 3
-                padding: 0.1 * root.width, 0, 0, 0.025 * root.height
+                padding: 0.1 * root.width, 0, 0, 0.0125 * root.height
                 spacing: 0.0125 * root.height
 
                 Label:
@@ -282,9 +282,34 @@
                     name: "Set"
                     on_press: root.listen_to("rotate")
 
+            BoxLayout:
+                size_hint: 1, 1/12
+                padding: 0.1 * root.width, 0, 0, 0.0125 * root.height
+                spacing: 0.025 * root.width
+
+                CButton:
+                    id: set_key_defaults_button
+                    size_hint: 0.333, 1
+                    name: "Default keys"
+                    on_press: root.set_control_defaults("keys")
+
+                CButton:
+                    id: set_touch_defaults_button
+                    size_hint: 0.333, 1
+                    name: "Default touch / mouse"
+                    on_press: root.set_control_defaults("touch")
+
+                CButton:
+                    id: set_joystick_defaults_button
+                    size_hint: 0.333, 1
+                    name: "Default gamepad"
+                    on_press: root.set_control_defaults("gamepad")
+
+            Widget:
+                size_hint: 1, 1/12
 
             Label:
-                size_hint: 1, 0.1
+                size_hint: 1, 1/12
                 font_size: 0.5 * self.height
                 outline_width: 2
                 text_size: self.size
@@ -294,8 +319,8 @@
 
             GridLayout:
                 cols: 3
-                size_hint: 1, 0.3
-                padding: 0.1 * root.width, 0, 0, 0.025 * root.height
+                size_hint: 1, 3/12
+                padding: 0.1 * root.width, 0, 0, 0.0125 * root.height
                 spacing: 0.0125 * root.height
 
                 Label:
@@ -322,6 +347,7 @@
                     orientation: 'horizontal'
                     min: 0.0
                     max: 1.0
+                    cursor_size: 24, 24
                     value: app.sfx_volume
                     on_touch_up: app.sfx_volume = self.value
                     on_touch_move: app.sfx_volume = self.value
@@ -350,6 +376,7 @@
                     orientation: 'horizontal'
                     min: 0.0
                     max: 1.0
+                    cursor_size: 24, 24
                     value: app.music_volume
                     on_touch_up: app.music_volume = self.value
                     on_touch_move: app.music_volume = self.value

@@ -112,13 +112,12 @@ Good luck!
 ## Settings
 ### Controls
 You can re-define controls for horizontal movement, rotation, flip, 
-and drop. Press \<set\> followed by any input device action. Supported 
-input devices are keyboard, joysticks, gamepads, mouse and touch devices.
+and drop. Press \<set\> followed by any input device action. Or use the
+default settings for your input device. Supported input devices are 
+keyboard, joysticks, gamepads, mouse and touch devices.
 
 ### Audio
 Bugged by the default soundtrack? Choose another playlist.
-
-
 
 ## Implemented features
 * [x] Gameplay
@@ -132,7 +131,7 @@ Bugged by the default soundtrack? Choose another playlist.
 
 ## TODO
 * [ ] Auto detect input devices
-* [ ] Add input device defaults to settings
+* [ ] Menu navigation via keys and/or joystick
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 

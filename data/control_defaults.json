@@ -1,0 +1,28 @@
+{
+  "keys":
+  {
+    "left": "Key: left",
+    "right": "Key: right",
+    "flip": "Key: up",
+    "rotate": "Key: down",
+    "drop": "Key: spacebar"
+  },
+
+  "touch":
+  {
+    "left": "Touch: left",
+    "right": "Touch: right",
+    "flip": "Touch: up",
+    "rotate": "Touch: tap",
+    "drop": "Touch: down"
+  },
+
+  "gamepad":
+  {
+    "left": "Hat 0: left",
+    "right": "Hat 0: right",
+    "flip": "Button: 1",
+    "rotate": "Button: 0",
+    "drop": "Hat 0: down"
+  }
+}
