@@ -22,6 +22,7 @@ class CGameScreen(CNaviScreen):
 
     PAUSE_KEY = "lctrl" # TODO Remove it until the first release.
     MENU_KEY = "escape"
+    DESTROY_COUNT = 10
 
     _timer = None
     _time = 0
@@ -265,7 +266,7 @@ class CGameScreen(CNaviScreen):
 
         # Destroy act, if complete
         if not act.molecule.has_free_bonds():
-            act.set_job("destroy", {"count": 10})   # TODO use CONST instead of number
+            act.set_job("destroy", {"count": self.DESTROY_COUNT})
             app.play_sfx("bonus" if act.molecule.equals(bonus.molecule) else "success")
 
         # Otherwise, transfer to reactor
@@ -588,7 +589,7 @@ class CGameScreen(CNaviScreen):
         """
         rel_val = value / 0x8000    # 16 bit int to float
         axis = dict_get_or_create(self._joystick_axes, joy_id, axis_id)
-        if abs(rel_val) > 0.2:  # TODO replace 0.2 by const
+        if abs(rel_val) >= self.JOYSTICK_AXIS_THRESHOLD:
             axis.update({"dx": rel_val})
         else:
             axis.update({"dx": 0.0, "value": 0.0})
@@ -626,7 +627,7 @@ class CGameScreen(CNaviScreen):
         # Handle joystick axis devices
         for joy_id, joystick in self._joystick_axes.items():
             for axis_id, axis in joystick.items():
-                if ("dx" in axis) and (abs(axis["dx"]) >= 0.2): # TODO replace 0.2 by const
+                if ("dx" in axis) and (abs(axis["dx"]) >= self.JOYSTICK_AXIS_THRESHOLD):
                     value = axis["value"] if "value" in axis else 0.0
                     value *= 0.707
                     value += axis["dx"]

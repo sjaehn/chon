@@ -11,6 +11,7 @@ class CNaviScreen(Screen):
 
     JOYSTICK_ENTER_BUTTON = 0
     JOYSTICK_ESCAPE_BUTTON = 1
+    JOYSTICK_AXIS_THRESHOLD = 0.2
 
     navigable_ids = ListProperty([])
     """
