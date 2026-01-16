@@ -206,7 +206,7 @@ class CScoresScreen(Screen):
         self.bind(pos=self.build_scores_table, size=self.build_scores_table)
 
     def on_leave(self, *args):
-        self.bind(pos=self.build_scores_table, size=self.build_scores_table)
+        self.unbind(pos=self.build_scores_table, size=self.build_scores_table)
 
     def on_input_text_changed(self, instance, value):
         # Input focus leave
