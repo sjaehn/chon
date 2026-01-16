@@ -34,6 +34,9 @@ class CSettingsScreen(Screen):
         except FileNotFoundError:
             print("Error: control defaults file not found.", file=sys.stderr)
             return
+        except OSError as err:
+            print("Error: {}".format(err), file=sys.stderr)
+            return
 
         if name in default_data.keys():
             default = default_data[name]
