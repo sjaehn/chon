@@ -5,15 +5,15 @@ from kivy.uix.button import Button
 
 class CButton(Button):
     name = StringProperty("")
-    hover = BooleanProperty(False)
+    selected = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        Window.bind(mouse_pos=self.on_mouse_over)
+        Window.bind(mouse_pos=self.on_mouse_move)
 
-    def on_mouse_over(self, window, pos):
+    def on_mouse_move(self, window, pos):
         if self.collide_point(*pos):
-            self.hover = True
+            self.selected = True
         else:
-            self.hover = False
+            self.selected = False
 

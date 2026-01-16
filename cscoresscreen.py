@@ -3,15 +3,17 @@ from os import makedirs
 from os.path import join, isfile
 
 from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.core.window import Window
+from kivy.uix.screenmanager import ScreenManager
 from json import load as load_json
 from json import dumps
 
+from cnaviscreen import CNaviScreen
 from cscoreinput import CScoreInput
 from cscorewidget import CScoreWidget
 
 
-class CScoresScreen(Screen):
+class CScoresScreen(CNaviScreen):
     MAX_SCORES = 10
     scores_head = []
     scores_data_before = []
@@ -197,7 +199,13 @@ class CScoresScreen(Screen):
             # Game score
             self.build_scores_line(self.scores_data_game_after, scores_head, color=[1, 0, 0, 1])
 
+    def on_key_escape(self):
+        app = App.get_running_app()
+        app.root.current = 'menu_screen'
+        return True
+
     def on_enter(self, *args):
+        super().on_enter(*args)
         self.load_scores()
         self.get_game_scores()
         self.mix_scores()
@@ -207,9 +215,15 @@ class CScoresScreen(Screen):
 
     def on_leave(self, *args):
         self.unbind(pos=self.build_scores_table, size=self.build_scores_table)
+        super().on_leave(*args)
 
     def on_input_text_changed(self, instance, value):
+        # Input focus enter
+        if value:
+            Window.unbind(on_key_down=self.on_key_down)
+
         # Input focus leave
         if not value:
             self.scores_data_game["name"] = self.name_input.text[:24]
             self.save_scores()
+            Window.bind(on_key_down=self.on_key_down)

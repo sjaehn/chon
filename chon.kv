@@ -10,12 +10,12 @@
 
 <CButton>:
     markup: True
-    text: "[size=" + str(int(0.3 * self.height)) + "]" + self.name + "[/size]"
+    text: "[size=" + str(int(0.333 * self.height)) + "]" + self.name + "[/size]"
     background_color: 0, 0, 0, 0
     #background_normal: ""
     canvas.before:
         Color:
-            rgba: (0.1, 0.1, 0.1, 0.9) if self.hover else (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+            rgba: (0.1, 0.1, 0.1, 0.9) if self.selected else (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -66,6 +66,7 @@
 
 
 <CMenuScreen>:
+    navigable_ids: "start_button", "settings_button", "rules_button", "scores_button", "quit_button"
     canvas.before:
         Rectangle:
             pos: 0, 0
@@ -104,23 +105,29 @@
                     on_press: root.reset_and_goto_game_screen()
 
                 CButton:
+                    id: settings_button
                     name: "Settings"
                     on_press: app.root.current = 'settings_screen'
 
                 CButton:
+                    id: rules_button
                     name: "Rules"
                     on_press: app.root.current = 'rules_screen'
 
                 CButton:
+                    id: scores_button
                     name: "Highscore"
                     on_press: app.root.current = 'scores_screen'
 
                 CButton:
+                    id: quit_button
                     name: "Quit"
                     on_press: app.stop()
 
 
 <CSettingsScreen>:
+    navigable_ids: "set_left_button", "set_right_button", "set_drop_button", "set_flip_button", "set_rotate_button", "set_key_defaults_button", "set_touch_defaults_button", "set_joystick_defaults_button", "menu_button"
+    # TODO add sliders and spinner once supported
     canvas.before:
         Rectangle:
             pos: 0, 0

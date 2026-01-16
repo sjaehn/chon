@@ -1,13 +1,15 @@
 from kivy.app import App
 from kivy.core.window import Keyboard
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import ScreenManager
+from kivy.weakproxy import WeakProxy
 
 from ccontinuebutton import CContinueButton
 from ccontrol import CControl
+from cnaviscreen import CNaviScreen
 
 
-class CMenuScreen(Screen):
+class CMenuScreen(CNaviScreen):
     """
     Main menu screen class.
     """
@@ -23,6 +25,10 @@ class CMenuScreen(Screen):
             button_box: BoxLayout = self.ids.button_box
             button_box.add_widget(self.continue_button, index=-1)
 
+            # Register in ids and navigable_ids
+            self.ids["continue_button"] = WeakProxy(self.continue_button)
+            self.navigable_ids.insert(1, "continue_button")
+
             # Also re-label start button to restart
             start_button = self.ids.start_button
             start_button.name = "Restart"
@@ -35,6 +41,10 @@ class CMenuScreen(Screen):
             button_box: BoxLayout = self.ids.button_box
             button_box.remove_widget(self.continue_button)
             self.continue_button = None
+
+            # Unregister from ids and navigable_ids
+            del self.ids["continue_button"]
+            self.navigable_ids.remove("continue_button")
 
     def goto_game_screen(self, *args):
         self.manager.current = "game_screen"

@@ -5,9 +5,10 @@ from kivy.app import App
 from kivy.core.window import Window, Keyboard
 from kivy.uix.screenmanager import Screen
 from json import load as load_json
+from cnaviscreen import CNaviScreen
 
 
-class CSettingsScreen(Screen):
+class CSettingsScreen(CNaviScreen):
     CONTROL_DEFAULTS_FILENAME = "control_defaults.json"
 
     _controls = {}
@@ -45,6 +46,11 @@ class CSettingsScreen(Screen):
                     self._controls.update({key:default[key]})
                     self.set_control_label(key, default[key])
 
+    def on_key_escape(self):
+        app = App.get_running_app()
+        app.root.current = 'menu_screen'
+        return True
+
     def on_keydown(self, obj, keycode, scancode, text, modifiers):
         if self._listen_to in self._controls.keys():
             key = Keyboard.keycode_to_string(obj, keycode)
@@ -55,7 +61,9 @@ class CSettingsScreen(Screen):
                 self.set_control_label(self._listen_to, self._controls[self._listen_to])
             self._listen_to = ""
             return True
-        return False
+
+        else:
+            return super().on_key_down(obj, keycode, scancode, text, modifiers)
 
     def on_joy_axis(self, win, joy_id, axis_id, value):
         app = App.get_running_app()
