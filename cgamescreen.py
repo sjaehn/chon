@@ -2,19 +2,20 @@ import random
 
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.core.window import Window, Keyboard
+from kivy.core.window import Keyboard
 from kivy.input import MotionEvent
 from kivy.uix.relativelayout import RelativeLayout
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import ScreenManager
 
 from chover import CHover
 from cmolecule import CMolecule
 from cmoleculewidget import CMoleculeWidget
+from cnaviscreen import CNaviScreen
 from creactor import CReactor
 from ctools import fib, dict_get_or_create
 
 
-class CGameScreen(Screen):
+class CGameScreen(CNaviScreen):
     """
     CGameScreen is a Screen and also hosts the gameplay.
     """
@@ -545,7 +546,12 @@ class CGameScreen(Screen):
 
         return False
 
-    def on_keydown(self, obj, keycode, scancode, text, modifiers):
+    def on_key_escape(self):
+        app = App.get_running_app()
+        app.root.current = 'menu_screen'
+        return True
+
+    def on_key_down(self, obj, keycode, scancode, text, modifiers):
         """
         Key press event callback.
         :param obj: Object.
@@ -563,7 +569,7 @@ class CGameScreen(Screen):
         if key == self.PAUSE_KEY:
             self.start_stop_timer()
         elif key == self.MENU_KEY:
-            self.manager.current = "menu_screen"
+            self.on_key_escape()
 
         # Forward gaming keys
         elif act.job == "play":
@@ -593,6 +599,9 @@ class CGameScreen(Screen):
             self.respond_to_controls(type=["joy", "hat"], joy_id=joy_id, hat_id=hat_id, dx=value[0], dy=value[1])
 
     def on_joy_button_down(self, win, joy_id, button_id):
+        if button_id == self.JOYSTICK_ESCAPE_BUTTON:
+            return self.on_key_escape()
+
         act = self.ids.act
         if act.job == "play":
             self.respond_to_controls(type=["joy", "button", "down"], joy_id=joy_id, button_id=button_id)
@@ -669,11 +678,8 @@ class CGameScreen(Screen):
         self.manager.current = "scores_screen"
 
     def on_enter(self, *args):
+        super().on_enter(*args)
         self.start_timer()
-        Window.bind(on_key_down=self.on_keydown)
-        Window.bind(on_joy_axis=self.on_joy_axis)
-        Window.bind(on_joy_hat=self.on_joy_hat)
-        Window.bind(on_joy_button_down=self.on_joy_button_down)
 
         # Also add continue button to main menu
         screen_manager: ScreenManager = App.get_running_app().root
@@ -682,7 +688,4 @@ class CGameScreen(Screen):
 
     def on_leave(self, *args):
         self.stop_timer()
-        Window.unbind(on_key_down=self.on_keydown)
-        Window.unbind(on_joy_axis=self.on_joy_axis)
-        Window.unbind(on_joy_hat=self.on_joy_hat)
-        Window.unbind(on_joy_button_down=self.on_joy_button_down)
+        super().on_leave(*args)

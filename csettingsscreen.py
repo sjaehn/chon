@@ -2,8 +2,7 @@ import sys
 from os.path import join
 
 from kivy.app import App
-from kivy.core.window import Window, Keyboard
-from kivy.uix.screenmanager import Screen
+from kivy.core.window import Keyboard
 from json import load as load_json
 from cnaviscreen import CNaviScreen
 
@@ -51,7 +50,7 @@ class CSettingsScreen(CNaviScreen):
         app.root.current = 'menu_screen'
         return True
 
-    def on_keydown(self, obj, keycode, scancode, text, modifiers):
+    def on_key_down(self, obj, keycode, scancode, text, modifiers):
         if self._listen_to in self._controls.keys():
             key = Keyboard.keycode_to_string(obj, keycode)
             if key != "escape":
@@ -94,6 +93,8 @@ class CSettingsScreen(CNaviScreen):
                     self.set_control_label(self._listen_to, name)
                     self._listen_to = ""
                     return True
+        else:
+            return super().on_joy_hat(win, joy_id, hat_id, value)
         return False
 
     def on_joy_button_down(self, win, joy_id, button_id):
@@ -101,9 +102,13 @@ class CSettingsScreen(CNaviScreen):
         if (self._listen_to in self._controls.keys()) and \
                 (joy_id < app.MAX_JOYSTICKS) and \
                 (button_id < app.MAX_JOYSTICK_BUTTONS):
-            self._controls.update({self._listen_to: "Button: " + str(button_id)})
-            self.set_control_label(self._listen_to, "Button: " + str(button_id))
-            self._listen_to = ""
+            if button_id != self.JOYSTICK_ESCAPE_BUTTON:    # Ignore escape button
+                self._controls.update({self._listen_to: "Button: " + str(button_id)})
+                self.set_control_label(self._listen_to, "Button: " + str(button_id))
+                self._listen_to = ""
+            return True
+        else:
+            return super().on_joy_button_down(win, joy_id, button_id)
 
     def on_touch(self, t_type, touch):
         app = App.get_running_app()
@@ -168,10 +173,7 @@ class CSettingsScreen(CNaviScreen):
         for action in self._controls.keys():
             self.set_control_label(action, self._controls[action])
 
-        Window.bind(on_key_down=self.on_keydown)
-        Window.bind(on_joy_axis=self.on_joy_axis)
-        Window.bind(on_joy_hat=self.on_joy_hat)
-        Window.bind(on_joy_button_down=self.on_joy_button_down)
+        super().on_enter(*args)
 
     def on_leave(self, *args):
         app = App.get_running_app()
@@ -183,7 +185,4 @@ class CSettingsScreen(CNaviScreen):
         app.rotate_control = self._controls["rotate"]
 
         app.save_user_config()
-        Window.unbind(on_key_down=self.on_keydown)
-        Window.unbind(on_joy_axis=self.on_joy_axis)
-        Window.unbind(on_joy_hat=self.on_joy_hat)
-        Window.unbind(on_joy_button_down=self.on_joy_button_down)
+        super().on_leave(*args)

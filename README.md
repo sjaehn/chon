@@ -126,13 +126,13 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] Optional mouse/touch controls
 * [x] Optional joystick/gamepad support
 * [x] Custom user configs
-* [x] Menu navigation via touch, mouse, or keys
+* [x] Menu navigation via touch, mouse, keys, or joystick
 * [x] SFX, music playback
 * [x] High score table
 
 ## TODO
 * [ ] Auto detect input devices
-* [ ] Menu navigation via joystick
+* [ ] Keys and joystick navigation in sliders and spinners
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 

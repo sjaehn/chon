@@ -21,8 +21,8 @@
   {
     "left": "Hat 0: left",
     "right": "Hat 0: right",
-    "flip": "Button: 1",
-    "rotate": "Button: 0",
+    "flip": "Button: 3",
+    "rotate": "Button: 2",
     "drop": "Hat 0: down"
   }
 }
