@@ -8,6 +8,8 @@ from kivy.uix.screenmanager import ScreenManager
 from json import load as load_json
 from json import dumps
 
+from kivy.weakproxy import WeakProxy
+
 from cnaviscreen import CNaviScreen
 from cscoreinput import CScoreInput
 from cscorewidget import CScoreWidget
@@ -177,8 +179,14 @@ class CScoresScreen(CNaviScreen):
                     self.name_input = CScoreInput(text=text,
                                                   font_size=0.02 * min(self.height, 1.333 * self.width),
                                                   size_hint=(scores_head[key] / total, 1.0 / 15.0))
+                    self.name_input.selected = ""
                     scores_table.add_widget(self.name_input)
                     self.name_input.bind(focus=self.on_input_text_changed)
+
+                    # Register in ids and navigable_ids
+                    self.ids["name_input"] = WeakProxy(self.name_input)
+                    if "name_input" not in self.navigable_ids:
+                        self.navigable_ids.insert(0, "name_input")
                 else:
                     scores_table.add_widget(CScoreWidget(text=text,
                                                          font_size=0.02 * min(self.height, 1.333 * self.width),
@@ -204,19 +212,6 @@ class CScoresScreen(CNaviScreen):
         app.root.current = 'menu_screen'
         return True
 
-    def on_enter(self, *args):
-        super().on_enter(*args)
-        self.load_scores()
-        self.get_game_scores()
-        self.mix_scores()
-        self.save_scores()
-        self.build_scores_table()
-        self.bind(pos=self.build_scores_table, size=self.build_scores_table)
-
-    def on_leave(self, *args):
-        self.unbind(pos=self.build_scores_table, size=self.build_scores_table)
-        super().on_leave(*args)
-
     def on_input_text_changed(self, instance, value):
         # Input focus enter
         if value:
@@ -227,3 +222,22 @@ class CScoresScreen(CNaviScreen):
             self.scores_data_game["name"] = self.name_input.text[:24]
             self.save_scores()
             Window.bind(on_key_down=self.on_key_down)
+
+    def on_enter(self, *args):
+        super().on_enter(*args)
+        self.load_scores()
+        self.get_game_scores()
+        self.mix_scores()
+        self.save_scores()
+        self.build_scores_table()
+        self.bind(pos=self.build_scores_table, size=self.build_scores_table)
+
+    def on_leave(self, *args):
+        # Unregister "name_input" if exists
+        if "name_input" in self.navigable_ids:
+            self.navigable_ids.remove("name_input")
+        if "name_input" in self.ids:
+            del self.ids["name_input"]
+
+        self.unbind(pos=self.build_scores_table, size=self.build_scores_table)
+        super().on_leave(*args)

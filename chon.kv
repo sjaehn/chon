@@ -733,6 +733,7 @@
     border: 0, 0, 0, 0
 
 <CScoresScreen>:
+    navigable_ids: ["menu_button"]
     canvas.before:
         Rectangle:
             pos: 0, 0
@@ -773,6 +774,7 @@
             spacing: 2
 
             CButton:
+                id: menu_button
                 size_hint: None, 1.0
                 width: self.height
                 name: "Menu"

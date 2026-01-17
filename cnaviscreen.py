@@ -4,6 +4,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.uix.slider import Slider
 from kivy.uix.spinner import Spinner
+from kivy.uix.textinput import TextInput
 
 
 class CNaviScreen(Screen):
@@ -133,6 +134,8 @@ class CNaviScreen(Screen):
                     selection_idx = selection_idx + 1 if selection_idx + 1 < len(self.navigable_ids) else -1
                     self.unselect_widget()
                     self.select_widget(selection_idx)
+                else:
+                    pass
 
             # No selected widget: Select the first one
             else:
@@ -159,6 +162,16 @@ class CNaviScreen(Screen):
                 elif isinstance(widget, Button):
                     if widget.selected == "selected":
                         self.ids[selection].dispatch("on_press")
+
+                # TextInput: enter&focus/leave&unfocus
+                # Think about to unbind and rebind self.on_key_down
+                elif isinstance(widget, TextInput):
+                    if widget.selected == "selected":
+                        widget.selected = "entered"
+                        widget.focus = True
+                    elif widget.selected == "entered":
+                        widget.selected = "selected"
+                        widget.focus = False
 
     def on_key_escape(self):
         """
