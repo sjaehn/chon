@@ -126,8 +126,8 @@
 
 
 <CSettingsScreen>:
-    navigable_ids: "set_left_button", "set_right_button", "set_drop_button", "set_flip_button", "set_rotate_button", "set_key_defaults_button", "set_touch_defaults_button", "set_joystick_defaults_button", "menu_button"
-    # TODO add sliders and spinner once supported
+    navigable_ids: "set_left_button", "set_right_button", "set_drop_button", "set_flip_button", "set_rotate_button", "set_key_defaults_button", "set_touch_defaults_button", "set_joystick_defaults_button", "sfx_volume_slider", "music_volume_slider", "menu_button"
+    # TODO add spinner once supported
     canvas.before:
         Rectangle:
             pos: 0, 0
@@ -356,8 +356,8 @@
                     max: 1.0
                     cursor_size: 24, 24
                     value: app.sfx_volume
-                    on_touch_up: app.sfx_volume = self.value
-                    on_touch_move: app.sfx_volume = self.value
+                    selected: ''
+                    opacity: 1.0 if not self.selected else 1.2 if self.selected == "selected" else 1.5
 
                 Label:
                     size_hint: 0.4, 0.333
@@ -385,8 +385,8 @@
                     max: 1.0
                     cursor_size: 24, 24
                     value: app.music_volume
-                    on_touch_up: app.music_volume = self.value
-                    on_touch_move: app.music_volume = self.value
+                    selected: ''
+                    opacity: 1.0 if not self.selected else 1.2 if self.selected == "selected" else 1.5
 
                 Widget:
                     size_hint: 0.4, 0.333

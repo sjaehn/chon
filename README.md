@@ -132,7 +132,7 @@ Bugged by the default soundtrack? Choose another playlist.
 
 ## TODO
 * [ ] Auto detect input devices
-* [ ] Keys and joystick navigation in sliders and spinners
+* [ ] Keys and joystick navigation for spinners
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 

@@ -1,6 +1,8 @@
 from kivy.core.window import Window, Keyboard
 from kivy.properties import ListProperty
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
+from kivy.uix.slider import Slider
 
 
 class CNaviScreen(Screen):
@@ -18,11 +20,11 @@ class CNaviScreen(Screen):
     ListProperty containing all navigable ids.
     """
 
-    def select_widget(self, param: str | int | None = None, value: bool = True):
+    def select_widget(self, param: str | int | None = None, value: str = "selected"):
         """
         Selects or unselects a widget (or all widgets) from navigable_ids.
         :param param: Index number of the widget or ID of the widget or None for all widgets.
-        :param value: True for select, False for unselect.
+        :param value: "" or "selected" or "entered.
         """
 
         # None = All
@@ -43,7 +45,7 @@ class CNaviScreen(Screen):
         Unselects a widget (or all widgets) from navigable_ids.
         :param param: Index number of the widget or ID of the widget or None for all widgets.
         """
-        self.select_widget(param, False)
+        self.select_widget(param, "")
 
     def get_selected_widget_id(self):
         """
@@ -58,25 +60,63 @@ class CNaviScreen(Screen):
 
     def go_up(self):
         """
-        Navigates one widget upwards.
+        Go upwards: Either makes an upwards action on an "entered" widget (e.g., decreases its value) or navigates one
+        widget upwards.
         """
         if self.navigable_ids:
             selection = self.get_selected_widget_id()
-            selection_idx = self.navigable_ids.index(selection) if selection in self.navigable_ids else -1
-            selection_idx = selection_idx - 1 if selection_idx > 0 else 0
-            self.unselect_widget()
-            self.select_widget(selection_idx)
+            if selection in self.navigable_ids:
+                widget = self.ids[selection]
+
+                # "entered" selection: Action on entered widget
+                if widget.selected == "entered":
+                    if isinstance(widget, Slider):
+                        if widget.step:
+                            widget.value = max(widget.min, widget.value - widget.step)
+                        else:
+                            widget.value = max(widget.min, widget.value - (widget.max - widget.min) / 20)
+
+                # "selected": Move selection selected 1 pos up
+                elif widget.selected == "selected":
+                    selection_idx = self.navigable_ids.index(selection)
+                    selection_idx = selection_idx - 1 if selection_idx > 0 else 0
+                    self.unselect_widget()
+                    self.select_widget(selection_idx)
+
+            # No selected widget: Select the first one
+            else:
+                self.unselect_widget()
+                self.select_widget(0)
 
     def go_down(self):
         """
-        Navigates one widget downwards.
+        Go downwards: Either makes a downwards action on an "entered" widget (e.g., increases its value) or navigates
+        one widget downwards.
         """
         if self.navigable_ids:
             selection = self.get_selected_widget_id()
-            selection_idx = self.navigable_ids.index(selection) if selection in self.navigable_ids else -1
-            selection_idx = selection_idx + 1 if selection_idx + 1 < len(self.navigable_ids) else -1
-            self.unselect_widget()
-            self.select_widget(selection_idx)
+            if selection in self.navigable_ids:
+                widget = self.ids[selection]
+
+                # "entered" selection: Action on entered widget
+                if widget.selected == "entered":
+                    if isinstance(widget, Slider):
+                        if widget.step:
+                            widget.value = min(widget.max, widget.value + widget.step)
+                        else:
+                            widget.value = min(widget.max, widget.value + (widget.max - widget.min) / 20)
+
+                # "selected": Move selection selected 1 pos up
+                elif widget.selected == "selected":
+                    selection_idx = self.navigable_ids.index(selection)
+                    selection_idx = selection_idx + 1 if selection_idx + 1 < len(self.navigable_ids) else -1
+                    self.unselect_widget()
+                    self.select_widget(selection_idx)
+
+            # No selected widget: Select the first one
+            else:
+                self.unselect_widget()
+                self.select_widget(0)
 
     def activate_selected(self):
         """
@@ -85,7 +125,19 @@ class CNaviScreen(Screen):
         if self.navigable_ids:
             selection = self.get_selected_widget_id()
             if selection:
-                self.ids[selection].dispatch("on_press")    # TODO Replace by a more generic activation method
+                widget = self.ids[selection]
+
+                # Button: press
+                if isinstance(widget, Button):
+                    if widget.selected == "selected":
+                        self.ids[selection].dispatch("on_press")
+
+                # Slider: enter/leave
+                elif isinstance(widget, Slider):
+                    if widget.selected == "selected":
+                        widget.selected = "entered"
+                    elif widget.selected == "entered":
+                        widget.selected = "selected"
 
     def on_key_escape(self):
         """

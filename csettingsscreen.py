@@ -161,6 +161,14 @@ class CSettingsScreen(CNaviScreen):
             self.set_control_label(self._listen_to, self._controls[self._listen_to])
             self._listen_to = ""
 
+    def on_music_volume(self, *args):
+        app = App.get_running_app()
+        app.music_volume = self.ids.music_volume_slider.value
+
+    def on_sfx_volume(self, *args):
+        app = App.get_running_app()
+        app.sfx_volume = self.ids.sfx_volume_slider.value
+
     def on_enter(self, *args):
         app = App.get_running_app()
 
@@ -173,6 +181,8 @@ class CSettingsScreen(CNaviScreen):
         for action in self._controls.keys():
             self.set_control_label(action, self._controls[action])
 
+        self.ids.music_volume_slider.bind(value=self.on_music_volume)
+        self.ids.sfx_volume_slider.bind(value=self.on_sfx_volume)
         super().on_enter(*args)
 
     def on_leave(self, *args):
@@ -185,4 +195,6 @@ class CSettingsScreen(CNaviScreen):
         app.rotate_control = self._controls["rotate"]
 
         app.save_user_config()
+        self.ids.music_volume_slider.unbind(value=self.on_music_volume)
+        self.ids.sfx_volume_slider.unbind(value=self.on_sfx_volume)
         super().on_leave(*args)
