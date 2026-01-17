@@ -51,7 +51,7 @@
     sync_height: True
     canvas.before:
         Color:
-            rgba: (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
+            rgba: (0.1, 0.1, 0.1, 0.9) if self.selected else (0, 0, 0, 0.9) if self.state == 'normal' else (0.2, 0.2, 0.2, 0.9)
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -126,8 +126,7 @@
 
 
 <CSettingsScreen>:
-    navigable_ids: "set_left_button", "set_right_button", "set_drop_button", "set_flip_button", "set_rotate_button", "set_key_defaults_button", "set_touch_defaults_button", "set_joystick_defaults_button", "sfx_volume_slider", "music_volume_slider", "menu_button"
-    # TODO add spinner once supported
+    navigable_ids: "set_left_button", "set_right_button", "set_drop_button", "set_flip_button", "set_rotate_button", "set_key_defaults_button", "set_touch_defaults_button", "set_joystick_defaults_button", "sfx_volume_slider", "music_volume_slider", "playlist_spinner", "menu_button"
     canvas.before:
         Rectangle:
             pos: 0, 0
@@ -146,13 +145,19 @@
 
         BoxLayout:
             orientation: 'vertical'
+            padding: 0.0125 * self.width
             pos_hint: {'center_x': 0.5}
             size_hint: min(root.height / root.width, 1.0), 0.7
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 0.5
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
 
             Label:
                 size_hint: 1, 1/12
                 font_size: 0.5 * self.height
-                outline_width: 2
                 text_size: self.size
                 halign: 'left'
                 valign: 'center'
@@ -167,7 +172,6 @@
                 Label:
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -177,7 +181,6 @@
                     id: left_control_label
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -192,7 +195,6 @@
                 Label:
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -202,7 +204,6 @@
                     id: right_control_label
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -217,7 +218,6 @@
                 Label:
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -227,7 +227,6 @@
                     id: drop_control_label
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -242,7 +241,6 @@
                 Label:
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -252,7 +250,6 @@
                     id: flip_control_label
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -267,7 +264,6 @@
                 Label:
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -277,7 +273,6 @@
                     id:rotate_control_label
                     size_hint: 0.4, 0.2
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -318,7 +313,6 @@
             Label:
                 size_hint: 1, 1/12
                 font_size: 0.5 * self.height
-                outline_width: 2
                 text_size: self.size
                 halign: 'left'
                 valign: 'center'
@@ -333,7 +327,6 @@
                 Label:
                     size_hint: 0.4, 0.333
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -342,7 +335,6 @@
                 Label:
                     size_hint: 0.2, 0.333
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -362,7 +354,6 @@
                 Label:
                     size_hint: 0.4, 0.333
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -371,7 +362,6 @@
                 Label:
                     size_hint: 0.2, 0.333
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
@@ -394,7 +384,6 @@
                 Label:
                     size_hint: 0.2, 0.333
                     font_size: 0.5 * self.height
-                    outline_width: 2
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'

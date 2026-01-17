@@ -3,6 +3,7 @@ from kivy.properties import ListProperty
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.uix.slider import Slider
+from kivy.uix.spinner import Spinner
 
 
 class CNaviScreen(Screen):
@@ -70,11 +71,21 @@ class CNaviScreen(Screen):
 
                 # "entered" selection: Action on entered widget
                 if widget.selected == "entered":
+
+                    # Slider: Same as mouse wheel
                     if isinstance(widget, Slider):
                         if widget.step:
                             widget.value = max(widget.min, widget.value - widget.step)
                         else:
                             widget.value = max(widget.min, widget.value - (widget.max - widget.min) / 20)
+
+                    # Spinner: Set prev item
+                    elif isinstance(widget, Spinner):
+                        if widget.values and (widget.text in widget.values):
+                            idx = widget.values.index(widget.text)
+                            idx = idx - 1 if idx - 1 > 0 else 0
+                            widget.text = widget.values[idx]
+                            widget.is_open = False  # and close dropdown
 
                 # "selected": Move selection selected 1 pos up
                 elif widget.selected == "selected":
@@ -100,11 +111,21 @@ class CNaviScreen(Screen):
 
                 # "entered" selection: Action on entered widget
                 if widget.selected == "entered":
+
+                    # Slider: Same as mouse wheel
                     if isinstance(widget, Slider):
                         if widget.step:
                             widget.value = min(widget.max, widget.value + widget.step)
                         else:
                             widget.value = min(widget.max, widget.value + (widget.max - widget.min) / 20)
+
+                    # Spinner: Set next item
+                    elif isinstance(widget, Spinner):
+                        if widget.values and (widget.text in widget.values):
+                            idx = widget.values.index(widget.text)
+                            idx = idx + 1 if idx + 1 < len(widget.values) else -1
+                            widget.text = widget.values[idx]
+                            widget.is_open = False  # and close dropdown
 
                 # "selected": Move selection selected 1 pos up
                 elif widget.selected == "selected":
@@ -127,17 +148,17 @@ class CNaviScreen(Screen):
             if selection:
                 widget = self.ids[selection]
 
-                # Button: press
-                if isinstance(widget, Button):
-                    if widget.selected == "selected":
-                        self.ids[selection].dispatch("on_press")
-
-                # Slider: enter/leave
-                elif isinstance(widget, Slider):
+                # Spinner, Slider: enter/leave
+                if isinstance(widget, Spinner) or isinstance(widget, Slider):
                     if widget.selected == "selected":
                         widget.selected = "entered"
                     elif widget.selected == "entered":
                         widget.selected = "selected"
+
+                # Button: press
+                elif isinstance(widget, Button):
+                    if widget.selected == "selected":
+                        self.ids[selection].dispatch("on_press")
 
     def on_key_escape(self):
         """
