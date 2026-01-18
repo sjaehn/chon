@@ -295,7 +295,7 @@ class CMolecule:
         for y in range(h):
             for x in range(w):
                 atom = self.get_atom((x, y))
-                n_data[y - ny][x - nx] = atom.copy() if atom else None  # TODO Copy needed?
+                n_data[y - ny][x - nx] = atom.copy() if atom else None
 
         # Step 5: Copy other data
         for y in range(oh):

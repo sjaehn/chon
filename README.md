@@ -11,7 +11,7 @@ directly be executed. No install required.
 
 ### From source
 #### Requirements
-* Python >= 3.8
+* Python >= 3.8 (also depending on Kivy version used)
 * Kivy >= 2.2.0
 
 It is recommended to install kivy into a virtual environment (venv). 
@@ -131,7 +131,6 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] High score table
 
 ## TODO
-* [ ] Auto detect input devices
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 
