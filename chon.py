@@ -80,7 +80,11 @@ class CHONApp(App):
     MAX_JOYSTICK_BUTTONS = 16
 
     # Global game object data and images
+    themes = []
     atoms = {}
+    atom_images = {}
+    fragments = {}
+    bonus_molecules = {}
     fragments = []
     bonus_molecules = []
     bond_image = None
@@ -113,6 +117,16 @@ class CHONApp(App):
     test_bonus_names = []
     test_fragment_names = []
     test_nr_molecules = 0
+
+    def load_themes(self):
+        """
+        Loads uix theme data from <DATA_PATH>/themes.json.
+        """
+        self.fragments.clear()
+        with open(join(self.DATA_PATH, "themes.json"), "r", encoding="utf8") as read_file:
+            themes_data = load_json(read_file)
+            for t in themes_data:
+                self.themes.append(t)
 
     def load_atoms(self):
         """
@@ -150,7 +164,15 @@ class CHONApp(App):
         Loads images for atoms (C, H, O, N), bonds and free electrons from <INC_PATH>.
         """
         for atom in self.atoms:
-            self.atoms[atom].image = CoreImage(join(self.INC_PATH, atom.lower() + "1.png"))
+            # Set default atom image directly to atoms
+            self.atoms[atom].image = CoreImage(join(self.INC_PATH, atom.lower() + self.themes[0]["atom_suffix"]))
+
+            # Store all atom images
+            for theme in self.themes:
+                filename = atom.lower() + theme["atom_suffix"]
+                if filename not in self.atom_images:
+                    self.atom_images.update({filename: CoreImage(join(self.INC_PATH, filename))})
+
         self.bond_image = CoreImage(join(self.INC_PATH, "bond.png"))
         self.free_image = CoreImage(join(self.INC_PATH, "free.png"))
 
@@ -412,6 +434,7 @@ class CHONApp(App):
         self.icon = join(self.MISC_PATH, "icon.ico")
         LabelBase.register(name='OpenArrow', fn_regular=join(self.INC_PATH, 'OpenArrow-Regular.ttf'))
         LabelBase.register(name='Segment14', fn_regular=join(self.INC_PATH, 'segment14.regular.otf'))
+        self.load_themes()
         self.load_atoms()
         self.load_fragments()
         self.load_bonus_molecules()

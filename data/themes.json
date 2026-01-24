@@ -1,0 +1,30 @@
+[
+  {
+    "bg": "bg01.jpg",
+    "atom_suffix": "2.png"
+  },
+  {
+    "bg": "bg02.jpg",
+    "atom_suffix": "1.png"
+  },
+  {
+    "bg": "bg03.jpg",
+    "atom_suffix": "3.png"
+  },
+  {
+    "bg": "bg04.jpg",
+    "atom_suffix": "1.png"
+  },
+  {
+    "bg": "bg05.jpg",
+    "atom_suffix": "3.png"
+  },
+  {
+    "bg": "bg06.jpg",
+    "atom_suffix": "2.png"
+  },
+  {
+    "bg": "bg07.jpg",
+    "atom_suffix": "2.png"
+  }
+]

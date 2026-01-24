@@ -26,6 +26,7 @@ class CGameScreen(CNaviScreen):
 
     _timer = None
     _time = 0
+    _drop_from = 0
     _bg_filenames = ["bg0" + str(i) + ".jpg" for i in range(2, 7)]
     _bonus_molecules = []
     _joystick_axes = {}
@@ -43,13 +44,13 @@ class CGameScreen(CNaviScreen):
             pass
 
         self.reset_act()
+        self.set_theme()
         self.score = 0
         self._time = 0
         self.nr_molecules = app.test_nr_molecules
         self._drop_from = 0
 
-        game_over_label = self.ids.game_over_label
-        game_over_label.opacity = 0
+        self.ids.game_over_label.opacity = 0
 
     def game_over(self):
         """
@@ -69,19 +70,28 @@ class CGameScreen(CNaviScreen):
             self.stop_timer()
         self._timer = Clock.schedule_once(self.switch_to_scores_screen, 2)
 
-    def set_bg_filename(self):
+    def set_theme(self):
         """
-        Randomly chooses a filename for background images.
+        Randomly chooses a theme and sets filename for background images and sets atom images.
         """
+        app = App.get_running_app()
+        reactor = self.ids.reactor
+        bonus = self.ids.bonus
+
         # Randomize but keep last list element to get sure to switch
-        random.shuffle(self._bg_filenames[:-1])
+        random.shuffle(app.themes[:-1])
 
-        # Set new bg filename
-        self.bg_filename = self._bg_filenames[0]
+        # Put this theme back to the end of the list
+        theme = app.themes[0]
+        app.themes.pop(0)
+        app.themes.append(theme)
 
-        # Put this bg image back to the end of the list
-        self._bg_filenames.pop(0)
-        self._bg_filenames.append(self.bg_filename)
+        # Set new bg filename and re-draw all molecules
+        self.bg_filename = theme["bg"]
+        bonus.draw_canvas()
+        for child in reactor.children:
+            if type(child) is CMoleculeWidget:
+                child.draw_canvas()
 
     def start_timer(self):
         """
@@ -200,7 +210,7 @@ class CGameScreen(CNaviScreen):
 
                 # Next level?
                 if self.nr_molecules % 10 == 0:
-                    self.set_bg_filename()
+                    self.set_theme()
 
                 # Get bonus?
                 if act.molecule.equals(bonus.molecule):

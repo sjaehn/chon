@@ -51,14 +51,15 @@ class CMoleculeWidget(Widget):
         Draws atoms and bonds to the widget canvas.
         """
 
-        app = App.get_running_app()
-        step = self.BOND + self.GAP
-        bond_image = app.bond_image
-        free_image = app.free_image
+
         self.canvas.clear()
         if (self.rows != 0) and (self.cols != 0):
             w, h = self.size
-            pass
+            app = App.get_running_app()
+            step = self.BOND + self.GAP
+            bond_image = app.bond_image
+            free_image = app.free_image
+            atom_suffix = app.themes[-1]["atom_suffix"]
 
             with self.canvas:
                 PushMatrix()
@@ -117,20 +118,23 @@ class CMoleculeWidget(Widget):
                 for row in range(self.rows):
                     for col in range(self.cols):
                         atom = self.molecule.get_atom((col, row))
-                        if (atom is not None) and (atom.image is not None):
-                            Color(1, 1, 1, 1)
-                            Rectangle(texture=atom.image.texture, pos=(col + 0.15, row + 0.15), size=(0.7, 0.7))
-                            nr_free = sum(atom.bonds["free"])
-                            if nr_free:
-                                label = Label(text=str(nr_free), font_size=20)
-                                label.refresh()
-                                if (atom.symbol == "H") or (atom.symbol == "N"):
-                                    Color (0, 0, 0, 1)
-                                else:
-                                    Color(1, 1, 1, 1)
-                                Rectangle(texture=app.number_textures[nr_free],
-                                          pos=(col + 0.3, row + 0.325),
-                                          size=(0.35, 0.35))
+                        if atom is not None:
+                            atom_filename = atom.symbol.lower() + atom_suffix
+                            if atom_filename in app.atom_images:
+                                atom_image = app.atom_images[atom_filename]
+                                Color(1, 1, 1, 1)
+                                Rectangle(texture=atom_image.texture, pos=(col + 0.15, row + 0.15), size=(0.7, 0.7))
+                                nr_free = sum(atom.bonds["free"])
+                                if nr_free:
+                                    label = Label(text=str(nr_free), font_size=20)
+                                    label.refresh()
+                                    if (atom.symbol == "H") or (atom.symbol == "N"):
+                                        Color (0, 0, 0, 1)
+                                    else:
+                                        Color(1, 1, 1, 1)
+                                    Rectangle(texture=app.number_textures[nr_free],
+                                              pos=(col + 0.3, row + 0.325),
+                                              size=(0.35, 0.35))
                 PopMatrix()
 
     def update_canvas(self, *args):
