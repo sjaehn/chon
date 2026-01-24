@@ -132,6 +132,7 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] UX theme change after each level
 
 ## TODO
+* [ ] Explosions (on request)
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 
