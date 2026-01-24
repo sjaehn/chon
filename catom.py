@@ -12,7 +12,6 @@ class CAtom:
         self.rgba = rgba
         self.bonds = {"free": [1 if i < bonds else 0 for i in range(4)],
                       "bound": [0, 0, 0, 0]} if type(bonds) == int else bonds
-        self.image = None
 
     @classmethod
     def from_dict(cls, d):
@@ -109,7 +108,6 @@ class CAtom:
                        self.rgba.copy(),
                        {"free": self.bonds["free"].copy(),
                         "bound": self.bonds["bound"].copy()})
-        n_atom.image = self.image
         return n_atom
 
     def __str__(self):

@@ -164,10 +164,6 @@ class CHONApp(App):
         Loads images for atoms (C, H, O, N), bonds and free electrons from <INC_PATH>.
         """
         for atom in self.atoms:
-            # Set default atom image directly to atoms
-            self.atoms[atom].image = CoreImage(join(self.INC_PATH, atom.lower() + self.themes[0]["atom_suffix"]))
-
-            # Store all atom images
             for theme in self.themes:
                 filename = atom.lower() + theme["atom_suffix"]
                 if filename not in self.atom_images:
