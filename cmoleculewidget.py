@@ -129,8 +129,8 @@ class CMoleculeWidget(Widget):
                                 else:
                                     Color(1, 1, 1, 1)
                                 Rectangle(texture=app.number_textures[nr_free],
-                                          pos=(col + 0.3, row + 0.35),
-                                          size=(0.3, 0.3))
+                                          pos=(col + 0.3, row + 0.325),
+                                          size=(0.35, 0.35))
                 PopMatrix()
 
     def update_canvas(self, *args):

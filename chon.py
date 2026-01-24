@@ -150,7 +150,7 @@ class CHONApp(App):
         Loads images for atoms (C, H, O, N), bonds and free electrons from <INC_PATH>.
         """
         for atom in self.atoms:
-            self.atoms[atom].image = CoreImage(join(self.INC_PATH, atom.lower() + ".png"))
+            self.atoms[atom].image = CoreImage(join(self.INC_PATH, atom.lower() + "1.png"))
         self.bond_image = CoreImage(join(self.INC_PATH, "bond.png"))
         self.free_image = CoreImage(join(self.INC_PATH, "free.png"))
 
