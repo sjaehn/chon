@@ -129,6 +129,7 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] Menu navigation via touch, mouse, keys, or joystick
 * [x] SFX, music playback
 * [x] High score table
+* [x] UX theme change after each level
 
 ## TODO
 * [ ] Prepare mobile version
