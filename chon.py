@@ -122,7 +122,7 @@ class CHONApp(App):
         """
         Loads uix theme data from <DATA_PATH>/themes.json.
         """
-        self.fragments.clear()
+        self.themes.clear()
         with open(join(self.DATA_PATH, "themes.json"), "r", encoding="utf8") as read_file:
             themes_data = load_json(read_file)
             for t in themes_data:
