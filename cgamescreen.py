@@ -26,7 +26,7 @@ class CGameScreen(CNaviScreen):
 
     PAUSE_KEY = "lctrl" # TODO Remove it until the first release.
     MENU_KEY = "escape"
-    DESTROY_COUNT = 10
+    DESTROY_COUNT = 16
 
     _timer = None
     _time = 0
@@ -238,11 +238,16 @@ class CGameScreen(CNaviScreen):
 
         if act.job == "destroy":
             act.set_job(act.job, {"count": act.params["count"] - 1})
-            if act.params["count"] < 0:
+
+            # Just before explosion
+            if act.params["count"] == 0:
+                app.play_sfx("explode") # Play sound already here due to latency
+
+            # At explosion
+            elif act.params["count"] < 0:
 
                 # Create explosion
                 self.explode_act()
-                app.play_sfx("explode")
 
                 # Show score to be added
                 w, h = act.size
