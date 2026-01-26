@@ -1,18 +1,22 @@
 import random
+from math import sqrt
 
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.core.image import Image as CoreImage
 from kivy.core.window import Keyboard
 from kivy.input import MotionEvent
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.screenmanager import ScreenManager
 
+from cflyingtriangle import CFlyingTriangle
 from chover import CHover
 from cmolecule import CMolecule
 from cmoleculewidget import CMoleculeWidget
 from cnaviscreen import CNaviScreen
 from creactor import CReactor
 from ctools import fib, dict_get_or_create
+from ctriangle import CTriangle
 
 
 class CGameScreen(CNaviScreen):
@@ -30,6 +34,7 @@ class CGameScreen(CNaviScreen):
     _bg_filenames = ["bg0" + str(i) + ".jpg" for i in range(2, 7)]
     _bonus_molecules = []
     _joystick_axes = {}
+    _explosion_fragments: list[CFlyingTriangle] = []
 
     def reset(self):
         """
@@ -182,17 +187,62 @@ class CGameScreen(CNaviScreen):
         # Step 6: Stop if no space
         return not act.collides_with_others(reactor.children)
 
+    def explode_act(self):
+        """
+        Gets the act molecule as an image, creates explosion fragments from it, and adds fragments as CFLyingTriangle
+        objects to _explosion_fragments.
+        """
+
+        act = self.ids.act
+        tube = self.ids.tube
+        img:CoreImage = act.export_as_image()
+        triangles: list[CTriangle] = []
+
+        def _subdivide(wid, sub):
+            if sub <= 0:
+                triangles.append(wid)
+
+            else:
+                frac = 0.4 + 0.2 * random.random()
+                ff1, ff2 = wid.split_longest(frac)
+                _subdivide(ff1, sub - 1)
+                _subdivide(ff2, sub - 1)
+
+        # Divide act into two CTriangle objects
+        f1 = CTriangle(pos=act.pos, size=img.size, p1=(0, act.height), p2=(0,0), p3=(act.width, 0), image=img)
+        f2 = CTriangle(pos=act.pos, size=img.size, p1=(0, act.height), p2=act.size, p3=(act.width, 0), image=img)
+
+        # Recursively perform further subdivisions
+        sub:int = int(sqrt(act.rows * act.cols))
+        _subdivide(f1, sub)
+        _subdivide(f2, sub)
+
+        # Convert to CFlyingTriangle and add physics, and append to _explosion fragments
+        for triangle in triangles:
+            cft = CFlyingTriangle(triangle)
+            cft.x_velocity = 20.0 - 40.0 * random.random()
+            cft.y_velocity = 30.0 - 40.0 * random.random()
+            cft.spin = 36.0 - 72.0 * random.random()
+            cft.y_acceleration = -1.0
+            tube.add_widget(cft)
+            self._explosion_fragments.append(cft)
+
     def destroy_act(self):
         """
         Proceeds countdown and finally destroys act.
         """
         act = self.ids.act
+        app = App.get_running_app()
         bonus = self.ids.bonus
         tube = self.ids.tube
 
         if act.job == "destroy":
             act.set_job(act.job, {"count": act.params["count"] - 1})
             if act.params["count"] < 0:
+
+                # Create explosion
+                self.explode_act()
+                app.play_sfx("explode")
 
                 # Show score to be added
                 w, h = act.size
@@ -658,6 +708,14 @@ class CGameScreen(CNaviScreen):
                 hover.opacity -= 0.03125
             else:
                 tube.remove_widget(hover)
+
+        # Explosion fragments: Apply physics and remove fragments out of screen
+        for ef in self._explosion_fragments[:]:
+            ef.move(1.0)
+            ef.rotate(1.0)
+            if not ef.collide_widget(self):
+                tube.remove_widget(ef)
+                self._explosion_fragments.remove(ef)
 
         # Empty molecule: Cleanup reactor
         # Try to drop all floating molecule widgets. Otherwise, spawn a new molecule and check if to create a new bonus

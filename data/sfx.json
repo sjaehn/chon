@@ -4,5 +4,6 @@
   "drop": "drop.wav",
   "boom": "boom.wav",
   "success": "success.wav",
-  "bonus": "bonus.wav"
+  "bonus": "bonus.wav",
+  "explode": "explode.wav"
 }

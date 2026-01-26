@@ -127,12 +127,12 @@ Bugged by the default soundtrack? Choose another playlist.
 * [x] Optional joystick/gamepad support
 * [x] Custom user configs
 * [x] Menu navigation via touch, mouse, keys, or joystick
+* [x] FX (explosion, physics)
 * [x] SFX, music playback
 * [x] High score table
 * [x] UX theme change after each level
 
 ## TODO
-* [ ] Explosions (on request)
 * [ ] Prepare mobile version
 * [ ] Add build workflow
 
@@ -143,7 +143,7 @@ See LICENSE.
 ### Assets
 All sounds and images provided in this repository are either not eligible
 to copyright or granted to free use:
-* Sound effect `boom.wav` from https://freesound.org/search/?q=825053 as 
+* Sound effect `inc/boom.wav` from https://freesound.org/search/?q=825053 as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
 * Other sound effects (`inc/*.wav`) are synthesized by sjaehn and 
 granted as 
@@ -152,7 +152,7 @@ granted as
 interpretations of classic russian folk songs (Kohanochka, Karapyet, 
 Troika; all before 1900) by sjaehn and granted as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
-* All tracks of "Chemystery" by sjaehn and granted as 
+* All tracks of "Chemystery" (`inc/mu_02_*.ogg`) by sjaehn and granted as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
 * All game item images (`inc/*.png`) by sjaehn and granted as 
 [CC0](https://creativecommons.org/publicdomain/zero/1.0/legalcode).
