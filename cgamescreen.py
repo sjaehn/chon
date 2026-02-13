@@ -241,6 +241,8 @@ class CGameScreen(CNaviScreen):
 
             # Just before explosion
             if act.params["count"] == 0:
+                app.sfx["explode"].pitch = 1.0 + 0.5 * (random.random() - 0.5)
+                app.sfx["explode"].volume = app.sfx_volume * min(0.5 + act.rows * act.cols / 80, 1.0)
                 app.play_sfx("explode") # Play sound already here due to latency
 
             # At explosion
