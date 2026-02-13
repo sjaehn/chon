@@ -1,3 +1,4 @@
+from kivy.graphics import Color, Line, InstructionGroup
 from kivy.uix.relativelayout import RelativeLayout
 
 from cmolecule import CMolecule
@@ -12,11 +13,26 @@ class CReactor(RelativeLayout):
     COLS = 8
     ROWS = 16
 
+    grid = None
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.bind(pos=self.update_children, size=self.update_children)
+        self.bind(pos=self.update, size=self.update)
 
-    def update_children(self, *args):
+    def draw_canvas(self):
+        if self.grid is not None: self.grid.clear()
+        self.grid = InstructionGroup()
+        self.grid.add(Color(1, 1, 1, 0.05))
+        for c in range(1, self.COLS):
+            self.grid.add(Line(points=[c * self.width / self.COLS, 0.1 * self.height / self.ROWS,
+                                       c * self.width / self.COLS, (self.ROWS - 0.1) * self.height / self.ROWS], width=1))
+        for r in range(1, self.ROWS):
+            self.grid.add(Line(points=[0.1 * self.width / self.COLS, r * self.height / self.ROWS,
+                                       (self.COLS - 0.1) * self.width / self.COLS, r * self.height / self.ROWS], width=1))
+        self.canvas.before.add(self.grid)
+
+    def update(self, *args):
+        self.draw_canvas()
         for child in self.children:
             if type(child) is CMoleculeWidget:
                 child.pos = self.x + self.width * child.col / self.COLS, self.y + child.row * self.height / self.ROWS
