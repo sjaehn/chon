@@ -5,7 +5,7 @@ from json import load as load_json, dumps
 from kivy.app import App
 from kivy.core.audio import SoundLoader
 from kivy.core.image import Image as CoreImage
-from kivy.core.text import LabelBase, Label
+from kivy.core.text import LabelBase, Label, DEFAULT_FONT
 from kivy.graphics.texture import Texture
 from kivy.properties import NumericProperty, StringProperty
 
@@ -429,7 +429,7 @@ class CHONApp(App):
     def build(self):
         self.icon = join(self.MISC_PATH, "icon.ico")
         LabelBase.register(name='OpenArrow', fn_regular=join(self.INC_PATH, 'OpenArrow-Regular.ttf'))
-        LabelBase.register(name='Segment14', fn_regular=join(self.INC_PATH, 'segment14.regular.otf'))
+        LabelBase.register(DEFAULT_FONT, join(self.INC_PATH, 'segment14.regular.otf'))
         self.load_themes()
         self.load_atoms()
         self.load_fragments()

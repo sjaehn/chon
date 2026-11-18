@@ -20,7 +20,7 @@ class CSettingsScreen(CNaviScreen):
         :param control: Text to display.
         """
         if action in self._controls.keys():
-            self.ids[action + "_control_label"].text = control
+            self.ids[action + "_control_label"].text = control.replace(": ", " ")
 
     def set_control_defaults(self, name):
         """

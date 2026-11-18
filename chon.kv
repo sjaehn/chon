@@ -161,7 +161,7 @@
                 text_size: self.size
                 halign: 'left'
                 valign: 'center'
-                text: "Controls:"
+                text: "Controls"
 
             GridLayout:
                 size_hint: 1, 5/12
@@ -175,7 +175,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Move left:"
+                    text: "Move left"
 
                 Label:
                     id: left_control_label
@@ -189,7 +189,8 @@
                 CButton:
                     id: set_left_button
                     size_hint: 0.2, 0.2
-                    name: "Set"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Set[/size]"
                     on_press: root.listen_to("left")
 
                 Label:
@@ -198,7 +199,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Move right:"
+                    text: "Move right"
 
                 Label:
                     id: right_control_label
@@ -212,7 +213,8 @@
                 CButton:
                     id: set_right_button
                     size_hint: 0.2, 0.2
-                    name: "Set"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Set[/size]"
                     on_press: root.listen_to("right")
 
                 Label:
@@ -221,7 +223,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Drop:"
+                    text: "Drop"
 
                 Label:
                     id: drop_control_label
@@ -235,7 +237,8 @@
                 CButton:
                     id: set_drop_button
                     size_hint: 0.2, 0.2
-                    name: "Set"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Set[/size]"
                     on_press: root.listen_to("drop")
 
                 Label:
@@ -244,7 +247,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Flip:"
+                    text: "Flip"
 
                 Label:
                     id: flip_control_label
@@ -258,7 +261,8 @@
                 CButton:
                     id: set_flip_button
                     size_hint: 0.2, 0.2
-                    name: "Set"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Set[/size]"
                     on_press: root.listen_to("flip")
 
                 Label:
@@ -267,7 +271,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Rotate:"
+                    text: "Rotate"
 
                 Label:
                     id:rotate_control_label
@@ -281,7 +285,8 @@
                 CButton:
                     id: set_rotate_button
                     size_hint: 0.2, 0.2
-                    name: "Set"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Set[/size]"
                     on_press: root.listen_to("rotate")
 
             BoxLayout:
@@ -292,19 +297,22 @@
                 CButton:
                     id: set_key_defaults_button
                     size_hint: 0.333, 1
-                    name: "Default keys"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Default keys[/size]"
                     on_press: root.set_control_defaults("keys")
 
                 CButton:
                     id: set_touch_defaults_button
                     size_hint: 0.333, 1
-                    name: "Default touch / mouse"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Default touch[/size]"
                     on_press: root.set_control_defaults("touch")
 
                 CButton:
                     id: set_joystick_defaults_button
                     size_hint: 0.333, 1
-                    name: "Default gamepad"
+                    markup: True
+                    text: "[size=" + str(int(self.height * 0.5)) + "]Default gamepad[/size]"
                     on_press: root.set_control_defaults("gamepad")
 
             Widget:
@@ -316,7 +324,7 @@
                 text_size: self.size
                 halign: 'left'
                 valign: 'center'
-                text: "Audio:"
+                text: "Audio"
 
             GridLayout:
                 cols: 3
@@ -330,7 +338,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "SFX:"
+                    text: "SFX"
 
                 Label:
                     size_hint: 0.2, 0.333
@@ -338,7 +346,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Vol:"
+                    text: "Vol"
 
                 Slider:
                     id: sfx_volume_slider
@@ -357,7 +365,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Music:"
+                    text: "Music"
 
                 Label:
                     size_hint: 0.2, 0.333
@@ -365,7 +373,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "Vol:"
+                    text: "Vol"
 
                 Slider:
                     id: music_volume_slider
@@ -387,7 +395,7 @@
                     text_size: self.size
                     halign: 'left'
                     valign: 'center'
-                    text: "List:"
+                    text: "List"
 
                 CSpinner:
                     id: playlist_spinner
@@ -461,7 +469,6 @@
 
 <CHover>
     size_hint: 0.2, 0.05
-    font_name: 'Segment14'
     font_size: 0.75 * self.height
     text_size: self.size
 
@@ -515,7 +522,6 @@
 
                     Label:
                         id: game_over_label
-                        font_name: 'Segment14'
                         size_hint: 1, 1
                         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                         opacity: 0
@@ -535,7 +541,6 @@
                         id: fragment_label
                         size_hint: 0.75, 0.03
                         pos_hint: {'center_x': 0.5, 'top': 1}
-                        font_name: 'Segment14'
                         font_size: 0.75 * self.height
                         text_size: self.size
                         halign: 'center'
@@ -573,7 +578,6 @@
 
                     Label:
                         id: score_label
-                        font_name: 'Segment14'
                         size_hint: 1.0, 0.4 if root.width > root.height else 0.2
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -583,7 +587,6 @@
 
                     Label:
                         id: level_label
-                        font_name: 'Segment14'
                         size_hint: 1.0, 0.3 if root.width > root.height else 0.15
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -593,7 +596,6 @@
 
                     Label:
                         id: molecules_label
-                        font_name: 'Segment14'
                         size_hint: 1.0, 0.3 if root.width > root.height else 0.15
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -614,7 +616,6 @@
                             size: self.size
 
                     Label:
-                        font_name: 'Segment14'
                         size_hint: 1.0, 0.15
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -624,7 +625,6 @@
 
                     Label:
                         id: bonus_name
-                        font_name: 'Segment14'
                         size_hint: 1.0, 0.1
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -645,7 +645,6 @@
 
                     Label:
                         id: bonus_label
-                        font_name: 'Segment14'
                         size_hint: 0.9, 0.1
                         font_size: 0.75 * self.height
                         text_size: self.size
@@ -668,7 +667,7 @@
                     height: self.width
                     id: flip_button
                     markup: True
-                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↔[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.flip_control[:13] + "[/size]"
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↔[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.flip_control[:13].replace(": ", "\n") + "[/size]"
                     halign: 'center'
                     on_press: root.flip_act()
 
@@ -677,7 +676,7 @@
                     height: self.width
                     id: left_button
                     markup: True
-                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]←[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.left_control[:13] + "[/size]"
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]←[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.left_control[:13].replace(": ", "\n") + "[/size]"
                     halign: 'center'
                     on_press: root.h_move_act(-1)
 
@@ -686,7 +685,7 @@
                     height: self.width
                     id: drop_button
                     markup: True
-                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↓[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.drop_control[:13] + "[/size]"
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↓[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.drop_control[:13].replace(": ", "\n") + "[/size]"
                     halign: 'center'
                     on_press:
                         root._drop_from = act.row
@@ -697,7 +696,7 @@
                     height: self.width
                     id: right_button
                     markup: True
-                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]→[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.right_control[:13] + "[/size]"
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]→[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.right_control[:13].replace(": ", "\n") + "[/size]"
                     halign: 'center'
                     on_press: root.h_move_act(1)
 
@@ -706,7 +705,7 @@
                     height: self.width
                     id: rotate_button
                     markup: True
-                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↻[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.rotate_control[:13] + "[/size]"
+                    text: "[font=OpenArrow][size=" + str(int(self.height * 0.4)) + "]↻[/size][/font]\n[size=" + str(int(self.height * 0.15)) + "]" + app.rotate_control[:13].replace(": ", "\n") + "[/size]"
                     halign: 'center'
                     on_press: root.rotate_act()
 
@@ -722,12 +721,10 @@
     #font_size: 0.75 * self.height
     text_size: self.width, 1.2 * self.font_size
     halign: 'left'
-    font_name: 'Segment14'
 
 <CScoreInput>:
     multiline: False
     #font_size: 0.75 * self.height
-    font_name: 'Segment14'
     foreground_color: 1, 0, 0, 1
     background_color: 0, 0, 0, 0
     border: 0, 0, 0, 0

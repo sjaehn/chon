@@ -133,7 +133,7 @@ class CMoleculeWidget(Widget):
                                     else:
                                         Color(1, 1, 1, 1)
                                     Rectangle(texture=app.number_textures[nr_free],
-                                              pos=(col + 0.3, row + 0.325),
+                                              pos=(col + 0.35, row + 0.3),
                                               size=(0.35, 0.35))
                 PopMatrix()
 
